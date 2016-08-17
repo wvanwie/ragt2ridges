@@ -1,0 +1,16 @@
+Package: ragt2ridges
+Type: Package
+Title: Ridge Estimation of Vector Auto-Regressive (VAR) Processes
+Version: 0.2.1
+Date: 2016-07-20
+Author: Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
+Maintainer: Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
+Description: Ridge maximum likelihood estimation of vector auto-regressive processes and supporting functions for their exploitation.
+License: GPL (>= 2)
+LazyLoad: yes
+URL: https://github.com/wvanwie/ragt2ridges
+Depends: R (>= 2.15.1), rags2ridges (>= 2.0), gRbase, igraph
+Imports: expm, fdrtool, graph, graphics, grDevices, marray, Matrix, mvtnorm, RBGL, stats, utils
+LinkingTo: Rcpp, RcppArmadillo
+NeedsCompilation: yes
+Packaged: 2016-05-19 20:31:54 UTC; wessel
