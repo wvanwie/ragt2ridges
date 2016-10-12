@@ -20,6 +20,8 @@ importFrom(marray, maPalette)
 
 importFrom(Matrix, bandSparse, bdiag)
 
+importFrom(methods, as)
+
 importFrom(stats, constrOptim, cov2cor, nlm,  nlminb, optim, runif)
 
 importFrom(utils, setTxtProgressBar, txtProgressBar)
