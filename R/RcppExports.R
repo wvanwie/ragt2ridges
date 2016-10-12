@@ -13,30 +13,6 @@
     .Call('ragt2ridges_armaRidgeP', PACKAGE = 'ragt2ridges', S, target, lambda, invert)
 }
 
-.armaRidgePchordalInit <- function(S, lambda, target, type, Cliques, Separators) {
-    .Call('ragt2ridges_armaRidgePchordalInitWorkhorse', PACKAGE = 'ragt2ridges', S, lambda, target, type, Cliques, Separators)
-}
-
-.armaPenLLreparPforNLM <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
-    .Call('ragt2ridges_armaPenLLreparPforNLM', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
-}
-
-.armaPenLLreparP <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
-    .Call('ragt2ridges_armaPenLLreparP', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
-}
-
-.armaPenLLreparPgrad <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
-    .Call('ragt2ridges_armaPenLLreparPgrad', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
-}
-
-.armaPenLLreparGradArchI <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
-    .Call('ragt2ridges_armaPenLLreparGradArchI', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
-}
-
-.armaPenLLreparGradArchII <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
-    .Call('ragt2ridges_armaPenLLreparGradArchII', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
-}
-
 .armaVAR1_ridgeML <- function(Yraw, lambdaA, lambdaP, targetA, targetP, targetPtype, fitA, unbalanced, diagP, efficient, nInit, minSuccDiff) {
     .Call('ragt2ridges_armaVAR1_ridgeML', PACKAGE = 'ragt2ridges', Yraw, lambdaA, lambdaP, targetA, targetP, targetPtype, fitA, unbalanced, diagP, efficient, nInit, minSuccDiff)
 }
@@ -89,8 +65,8 @@
     .Call('ragt2ridges_armaVAR1_Ahat_ridgeML_forR', PACKAGE = 'ragt2ridges', P, COVY, eigvecVARY, eigvalVARY, lambdaA, targetA)
 }
 
-.armaVAR1_Ahat_ridgeSS <- function(COVY, VARY, lambdaA, targetA) {
-    .Call('ragt2ridges_armaVAR1_Ahat_ridgeSS_forR', PACKAGE = 'ragt2ridges', COVY, VARY, lambdaA, targetA)
+.armaVAR1_Ahat_ridgeSS <- function(VARY, COVY, lambdaA, targetA) {
+    .Call('ragt2ridges_armaVAR1_Ahat_ridgeSS_forR', PACKAGE = 'ragt2ridges', VARY, COVY, lambdaA, targetA)
 }
 
 .armaVAR1_loglik_LOOCVinternal <- function(Yt1, Yt0, A, P) {
@@ -101,3 +77,31 @@
     .Call('ragt2ridges_armaVAR1_loglik_forR', PACKAGE = 'ragt2ridges', Yraw, A, P)
 }
 
+.armaRidgePchordalInit <- function(S, lambda, target, type, Cliques, Separators) {
+    .Call('ragt2ridges_armaRidgePchordalInitWorkhorse', PACKAGE = 'ragt2ridges', S, lambda, target, type, Cliques, Separators)
+}
+
+.armaPenLLreparPforNLM <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
+    .Call('ragt2ridges_armaPenLLreparPforNLM', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
+}
+
+.armaPenLLreparP <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
+    .Call('ragt2ridges_armaPenLLreparP', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
+}
+
+.armaPenLLreparPgrad <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
+    .Call('ragt2ridges_armaPenLLreparPgrad', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
+}
+
+.armaPenLLreparGradArchI <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
+    .Call('ragt2ridges_armaPenLLreparGradArchI', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
+}
+
+.armaPenLLreparGradArchII <- function(x, E1, E2, S, lambda, target, nonzerosR, nonzerosC) {
+    .Call('ragt2ridges_armaPenLLreparGradArchII', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
+}
+
+# Register entry points for exported C++ functions
+methods::setLoadAction(function(ns) {
+    .Call('ragt2ridges_RcppExport_registerCCallable', PACKAGE = 'ragt2ridges')
+})
