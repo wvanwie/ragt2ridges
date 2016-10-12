@@ -2,6 +2,23 @@
 \title{News for Package \pkg{ragt2ridges}}
 \newcommand{\cpkg}{\href{http://cran.r-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.3}{
+ \itemize{
+    \item Some re-organization of the src-directory. 
+    \item Rcpp-functions made exportable to other packages.     
+    \item Input checks of the \code{ridgeVAR1}-function contained inconsistencies: repaired.
+    \item Function \code{momentS} added: evaluates the moments of the sample (inverse) covariance matrix.    
+  }
+}
+
+\section{Changes in version 0.2.2}{
+ \itemize{
+    \item Change to the description and namespace-file. Importing now from methods, for compatibility with Bioconductor 3.4.
+    \item A bug repaired in the \code{ridgeVAR1}-function. The option-combination \code{fitA="ss"} and a non-empty matrix being passed to the argument \code{zerosA} gave an error (an argument was not supplied to an internal C++ function).
+    \item A bug repaired in the \code{ridgeVAR1}-function. When specifying the option-combination \code{fitA="ss"} and non-empty matrices being passed to the arguments \code{zerosA} and \code{zerosP} the wrong order of arguments was supplied to an internal C++ function.
+  }
+}
+
 \section{Changes in version 0.2.1}{
   \itemize{
     \item Extra argument (\code{TburnIn}) for \code{dataVAR1}-function. It specifies number of burn-in time points before data is sampled from the process.
@@ -18,3 +35,4 @@
     \item Modified the example code of the \code{evaluateVAR1fit}. In this version, the \code{evaluateVAR1fit} function is no longer executed in the example code. This avoids saving .eps files during the package checking. 
   }
 }
+
