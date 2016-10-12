@@ -2,7 +2,14 @@
 
 // We only include RcppArmadillo.h which pulls Rcpp.h in for us
 // # include <Rcpp.h>
-# include <RcppArmadillo.h>
+#include <RcppArmadillo.h>
+
+// pull in cpp-functions from rags2ridges (now via .h-file, later via linkingTo)
+#include "rags2ridges.h"
+
+// pull in other functions
+#include "defaultTarget.h"
+#include "ridgePchordal.h"
 
 // These are not needed:
 // using namespace std;
@@ -10,433 +17,7 @@
 // using namespace RcppArmadillo;
 // [[Rcpp::depends("Rcpp")]]
 // [[Rcpp::depends("RcppArmadillo")]]
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/* ----------------------------------------------------------------------------------------------------------------------------------------------------------
-FUNCTIONS FOR THE RIDGE ML ESTIMATION OF THE PRECISION MATRIX.
-TAKEN DIRECTLY FROM THE RAGS2RIDGES-PACKAGE AND TO BE REMOVED WHEN THEY CAN BE DIRECTLY IMPORTED FROM THAT PACKAGE.
----------------------------------------------------------------------------------------------------------------------------------------------------------- */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-inline arma::mat rev_eig(const arma::vec eigval, const arma::mat eigvec) {
-  /* ---------------------------------------------------------------------------
-   "Reverse" the eigen decomposition, i.e. perform the multiplcation
-   - eigval > a vector of eigenvalues
-   - eigvec > a matrix of corresponding eigenvectors
-  --------------------------------------------------------------------------- */
-
-  return eigvec*diagmat(eigval)*eigvec.t();  // Could be more efficient
-}
-
-// [[Rcpp::export(.armaRidgePAnyTarget)]]
-arma::mat armaRidgePAnyTarget(const arma::mat & S,
-                              const arma::mat & target,
-                              const double lambda,
-                              int invert = 2) {
-  /* ---------------------------------------------------------------------------
-   Compute the ridge estimate for general/arbitrary targets.
-   Depending on the value of "invert"" using matrix inversion (via
-   diagonalization) or avoiding it.
-   - S      > A sample covariance matrix. Should not contain NAs, Infs, or NaNs!
-   - target > The target matrix with the same size as S
-   - lambda > The the ridge penalty
-   - invert > integer. Should the estimate be compute using inversion?
-              0 = "no", 1 = "yes", 2 = "automatic" (default).
-  --------------------------------------------------------------------------- */
-
-  arma::vec eigvals;
-  arma::mat eigvecs = S - lambda*target;
-  if (!eigvecs.is_finite()) {
-    return target;
-  }
-  eig_sym(eigvals, eigvecs, eigvecs, "dc");
-  eigvals = 0.5*eigvals;
-  arma::vec sqroot = sqrt(lambda + pow(eigvals, 2.0));
-
-  // Return target if shrunken evals are infinite and lambda is "large"
-  // Usually happens for lambda >= 1e154
-  if (lambda > 1e6 && (!eigvals.is_finite() || !sqroot.is_finite())) {
-    return target;
-  }
-
-  arma::vec D_inv = 1.0/(sqroot + eigvals); // inversion diagonal
-
-  if (invert == 2) {   // Determine to invert or not
-    if (lambda > 1) {  // Generally, don't use inversion for "large" lambda
-      invert = 0;
-    } else {
-      if (!D_inv.is_finite()) {
-        invert = 0;
-      } else {
-        invert = 1;
-      }
-    }
-  }
-
-  // Determine to invert or not
-  if (invert == 1) {
-    return rev_eig(D_inv, eigvecs);  // Proper inversion
-  } else {
-    arma::vec D_noinv = (sqroot - eigvals)/lambda; // inversion-less diagonal
-    return rev_eig(D_noinv, eigvecs);  // Inversion by proposion
-  }
-
-}
-
-// [[Rcpp::export(.armaRidgePScalarTarget)]]
-arma::mat armaRidgePScalarTarget(const arma::mat & S,
-                                 const double alpha,
-                                 const double lambda,
-                                 int invert = 2) {
-  /* ---------------------------------------------------------------------------
-   Compute the ridge estimate for rotational equivariant targets.
-   Depending on the value of "invert"" using matrix inversion (via
-   diagonalization) or avoiding it.
-   - S      > A sample covariance matrix.
-   - alpha  > The scaling of the identity matrix. Shoud not contain NaNs, Infs,
-              or NA.s
-   - lambda > The ridge penalty. Can be set to Inf (on the R side)
-   - invert > Should the estimate be compute using inversion?
-              0 = "no", 1 = "yes", 2 = "automatic", (default).
-  --------------------------------------------------------------------------- */
-
-  arma::vec eigvals;
-  arma::mat eigvecs;
-  arma::eig_sym(eigvals, eigvecs, S, "dc");
-
-  eigvals = 0.5*(eigvals - lambda*alpha);
-  arma::vec sqroot = sqrt(lambda + pow(eigvals, 2.0));
-
-  // Return target if shrunken evals are infinite and lambda is "large"
-  // Usually happens for lambda >= 1e154
-  if (lambda > 1e6 && (!eigvals.is_finite() || !sqroot.is_finite())) {
-    const int p = S.n_rows;
-    return alpha*arma::eye<arma::mat>(p, p);
-  }
-
-  arma::vec D_inv = 1.0/(sqroot + eigvals); // inversion diagonal
-
-  if (invert == 2) {   // Determine to invert or not
-    if (lambda > 1) {  // Generally, don't use inversion for "large" lambda
-      invert = 0;
-    } else {
-      if (!D_inv.is_finite()) {
-        invert = 0;
-      } else {
-        invert = 1;
-      }
-    }
-  }
-
-  // Determine to invert or not
-  if (invert == 1) {
-    return rev_eig(D_inv, eigvecs);  // Proper inversion
-  } else {
-    arma::vec D_noinv = (sqroot - eigvals)/lambda; // inversion-less diagonal
-    return rev_eig(D_noinv, eigvecs);  // Inversion by proposion
-  }
-
-}
-
-// [[Rcpp::export(.armaRidgeP)]]
-arma::mat armaRidgeP(const arma::mat & S,
-                     const arma::mat & target,
-                     const double lambda,
-                     int invert = 2) {
-  /* ---------------------------------------------------------------------------
-   The ridge estimator in C++. Wrapper for the subroutines
-   - S      > The sample covariance matrix (a numeric matrix on the R side)
-   - target > Target matrix (a numeric matrix on the R side, same size as S)
-   - lambda > The penalty (a numeric of length one on the R side)
-   - invert > Should the estimate be compute using inversion?
-              0 = "no", 1 = "yes", 2 = "automatic", (default).
-  --------------------------------------------------------------------------- */
-
- if (lambda <= 0) {
-    Rcpp::stop("The penalty (lambda) must be strictly postive");
-  }
-
-  if (lambda == arma::datum::inf) {
-    return target;
-  }
-
-  const int p = S.n_rows;
-  const double alpha = target(0, 0);
-  arma::mat alphaI = arma::zeros<arma::mat>(p, p);
-  alphaI.diag() += alpha;
-
-  if (arma::all(arma::all(target == alphaI))) {
-    return armaRidgePScalarTarget(S, alpha, lambda, invert);
-  } else {
-    return armaRidgePAnyTarget(S, target, lambda, invert);
-  }
-
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/* ----------------------------------------------------------------------------------------------------------------------------------------------------------
-SEASIDE VERSION OF THE DEFAULT TARGET FUNCTION (AS PROVIDED THROUGH THE RAGS2RIDGES-PACKAGE).
----------------------------------------------------------------------------------------------------------------------------------------------------------- */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-inline arma::mat armaP_defaultTarget(arma::mat S, std::string targetType, const double fraction, double const multiplier){
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// Rcpp version of its R-counterpart 'default.target'.
-	// Key difference is the input checks.
-	/////////////////////////////////////////////////////////////////////////////////////////
-
-	// Diagonal matrix with average of inverse nonzero eigenvalues of S as entries
-	if (targetType == "DAIE"){
-		arma::vec eigvals;
-		arma::mat eigvecs;
-		arma::eig_sym(eigvals, eigvecs, S, "dc");
-		double slh = mean(1/eigvals(find(eigvals >= (max(eigvals) * fraction))));
-		S = arma::zeros(S.n_rows, S.n_rows);
-		S.diag() += slh;
-	}
-
-	// Diagonal matrix with inverse of average of eigenvalues of S as entries
-	if (targetType == "DIAES"){
-		arma::vec eigvals;
-		arma::mat eigvecs;
-		arma::eig_sym(eigvals, eigvecs, S, "dc");
-		const double slh = 1/mean(eigvals);
-		S = arma::zeros(S.n_rows, S.n_rows);
-		S.diag() += slh;		
-	}
-
-	// Diagonal matrix with unit partial variance as entries
-	if (targetType == "DUPV"){
-		S = arma::eye(S.n_rows, S.n_rows);
-	}
-
-	// Diagonal matrix with average empirical partial variances as entries
-	if (targetType == "DAPV"){
-		const double apv = mean(1/arma::diagvec(S));
-		S = arma::zeros(S.n_rows, S.n_rows);
-		S.diag() += apv;		
-	}
-
-	// Diagonal matrix with constant partial variance as entries
-    	if (targetType == "DCPV"){
-    		S = arma::zeros(S.n_rows, S.n_rows);
-    		S.diag() += multiplier;
-    }
-
-    // Diagonal matrix with empirical partial variances as entries
-    if (targetType == "DEPV"){
-        S = arma::diagmat(1/arma::diagvec(S));
-	}
-
-    // Null matrix
-    if (targetType == "Null"){
-        S = arma::zeros(S.n_rows, S.n_rows);
-    }
-
-    // Return
-    return(S);
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/* ----------------------------------------------------------------------------------------------------------------------------------------------------------
-SUPPORT FUNCTIONS FOR RIDGE PRECISION ESTIMATION WITH CHORDAL SUPPORT
-INTENDED TO BE INCLUDED IN RAGS2RIDGES-PACKAGE WHEN DIRECT IMPORTATION FROM THAT SOURCE IS POSSIBLE
----------------------------------------------------------------------------------------------------------------------------------------------------------- */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// [[Rcpp::export(".armaRidgePchordalInit")]]
-arma::mat armaRidgePchordalInitWorkhorse(arma::mat S, const double lambda, arma::mat target, std::string type, Rcpp::List Cliques, Rcpp::List Separators){
-	////////////////////////////////////////////////////////////////////////////
-	// construct (guess of) ridge MLE of precision
-	// various types (Alt, ArchI, ArchII) of the ridge estimor are implemented
-	////////////////////////////////////////////////////////////////////////////
-
-	// start with null matrix
-	arma::mat P = arma::zeros<arma::mat>(S.n_rows, S.n_rows);
-
-	// first archetypal ridge estimator
-	if (type == "ArchI"){ 
-		arma::mat targetInv = arma::inv_sympd(target); 
-		// account for clique contributions
-		for (int k = 0; k < Cliques.size(); ++k){
-			arma::ivec slh = Cliques[k];
-			slh = slh - 1;
-			arma::uvec cliqNodes = arma::conv_to<arma::uvec>::from(slh);
-			P.submat(cliqNodes, cliqNodes) =  P.submat(cliqNodes, cliqNodes) + 
-				arma::inv_sympd((1-lambda) * S.submat(cliqNodes, cliqNodes) + lambda * targetInv.submat(cliqNodes, cliqNodes));
-		}
-		// account for separator contributions
-	 	for (int k = 0; k < Separators.size(); ++k){
-			arma::ivec slh = Separators[k];
-			if (slh.n_elem > 0){
-				slh = slh - 1;
-				arma::uvec sepNodes = arma::conv_to<arma::uvec>::from(slh);
-        	 		P.submat(sepNodes, sepNodes) =  arma::symmatl(P.submat(sepNodes, sepNodes)) - 
-					arma::inv_sympd((1-lambda) * S.submat(sepNodes, sepNodes) + lambda * targetInv.submat(sepNodes, sepNodes));
-			}
-		}
-	}
-
-	// second archetypal ridge estimator
-	if (type == "ArchII"){ 
-		// account for clique contributions
-		for (int k = 0; k < Cliques.size(); ++k){
-			arma::ivec slh = Cliques[k];
-			slh = slh - 1;
-			arma::uvec cliqNodes = arma::conv_to<arma::uvec>::from(slh);
-			P.submat(cliqNodes, cliqNodes) = arma::symmatl(P.submat(cliqNodes, cliqNodes)) + 
-				arma::inv_sympd(S.submat(cliqNodes, cliqNodes) + lambda * arma::eye(cliqNodes.n_elem, cliqNodes.n_elem));
-		}
-		// account for separator contributions
-	 	for (int k = 0; k < Separators.size(); ++k){
-			arma::ivec slh = Separators[k];
-			if (slh.n_elem > 0){
-				slh = slh - 1;
-				arma::uvec sepNodes = arma::conv_to<arma::uvec>::from(slh);
-				P.submat(sepNodes, sepNodes) = arma::symmatl(P.submat(sepNodes, sepNodes)) - 
-					arma::inv_sympd(S.submat(sepNodes, sepNodes) + lambda * arma::eye(sepNodes.n_elem, sepNodes.n_elem));
-			}
-		}
-	}
-
-	// alternative ridge estimator
-	if (type == "Alt"){ 
-		// account for clique contributions
-		for (int k = 0; k < Cliques.size(); ++k){
-			arma::ivec slh = Cliques[k];
-			slh = slh - 1;
-			arma::uvec cliqNodes = arma::conv_to<arma::uvec>::from(slh);
-			if (cliqNodes.n_elem > 1){ P.submat(cliqNodes, cliqNodes) = P.submat(cliqNodes, cliqNodes) + 
-				armaRidgeP(S.submat(cliqNodes, cliqNodes), target.submat(cliqNodes, cliqNodes), lambda); 
-			}
-			if (cliqNodes.n_elem == 1){  
-				arma::mat slh2 = S.submat(cliqNodes, cliqNodes) - lambda * target.submat(cliqNodes, cliqNodes);
-				double slh3 = slh2(0,0);
-				P.submat(cliqNodes, cliqNodes) = P.submat(cliqNodes, cliqNodes) + 1/(sqrt(lambda + 0.25f * slh3 * slh3) + slh3 / 2);
-			}
-		}
-		// account for separator contributions
-	 	for (int k = 0; k < Separators.size(); ++k){
-			arma::ivec slh = Separators[k];
-			if (slh.n_elem > 0){
-				slh = slh - 1;
-				arma::uvec sepNodes = arma::conv_to<arma::uvec>::from(slh);
-				if (sepNodes.n_elem > 1){ P.submat(sepNodes, sepNodes) = P.submat(sepNodes, sepNodes) - 
-					armaRidgeP(S.submat(sepNodes, sepNodes), target.submat(sepNodes, sepNodes), lambda); 
-				}
-				if (sepNodes.n_elem == 1){  
-					arma::mat slh2 = S.submat(sepNodes, sepNodes) - lambda * target.submat(sepNodes, sepNodes);
-					double slh3 = slh2(0,0);
-				 	P.submat(sepNodes, sepNodes) = P.submat(sepNodes, sepNodes) - 1/(sqrt(lambda + 0.25f * slh3 * slh3) + slh3 / 2);
-				}
-			}
-		}
-	}
-	
-	// return initial ridge guess for chordal precision matrix
-	return(P);
-}
-
-// [[Rcpp::export(".armaPenLLreparPforNLM")]]
-Rcpp::NumericVector armaPenLLreparPforNLM(const arma::vec x, const arma::mat E1, const arma::mat E2, const arma::mat S, const double lambda, const arma::mat target, const arma::uvec nonzerosR, const arma::uvec nonzerosC){
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// ridge penalized log-likelihood (and its gradient) for the reparametrized precision matrix.
-	// for the reparametrization refer Dahl et al. (2005).
-	// passed on to the 'nlm' optimization function
-	/////////////////////////////////////////////////////////////////////////////////////////
-
-	// construct precision matrix from alternative parametrization
-	const arma::mat P = E1 * arma::diagmat(x) * arma::trans(E2) + E2 * arma::diagmat(x) * arma::trans(E1);
-
-	// return (minus) penalized log-likelihood
-	Rcpp::NumericVector penLL(1);
-	penLL = -log(det(P)) + sum(arma::diagvec(P * S)) + 0.5 * lambda * sum(arma::diagvec((P-target) * (P-target)));
-
-	// return gradient of (minus) penalized log-likelihood: nonzero elements only
-	int p = S.n_rows;
-	const arma::mat gradMat = 2 * (S - arma::inv_sympd(P) + lambda * (P - target));
-	arma::uvec elemID = (nonzerosC - 1) * p + nonzerosR - 1;
-	arma::vec grad = gradMat.elem(elemID);
-	penLL.attr("gradient") = grad;
-
-	return penLL;
-}
-
-// [[Rcpp::export(".armaPenLLreparP")]]
-const double armaPenLLreparP(const arma::vec x, const arma::mat E1, const arma::mat E2, const arma::mat S, const double lambda, const arma::mat target, const arma::uvec nonzerosR, const arma::uvec nonzerosC){
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// ridge penalized log-likelihood for the reparametrized precision matrix.
-	// for the reparametrization refer Dahl et al. (2005)
-	// passed on to the 'optim' optimization function
-	/////////////////////////////////////////////////////////////////////////////////////////
-
-	// construct precision matrix from alternative parametrization
-	const arma::mat P = E1 * arma::diagmat(x) * arma::trans(E2) + E2 * arma::diagmat(x) * arma::trans(E1);
-
-	// return (minus) penalized log-likelihood
-    // double logDetP; double detPsign;
-    // arma::log_det(logDetP, detPsign, P);	
-	// const double penLL = -logDetP + sum(arma::diagvec(P * S)) + 0.5 * lambda * sum(arma::diagvec((P-target) * (P-target)));
-	const double penLL = -log(det(P)) + sum(arma::diagvec(P * S)) + 0.5 * lambda * sum(arma::diagvec((P-target) * (P-target)));	
-	return penLL;
-}
-
-// [[Rcpp::export(".armaPenLLreparPgrad")]]
-arma::vec armaPenLLreparPgrad(const arma::vec x, const arma::mat E1, const arma::mat E2, const arma::mat S, const double lambda, const arma::mat target, const arma::uvec nonzerosR, const arma::uvec nonzerosC){
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// gradient of ridge penalized log-likelihood for the reparametrized precision matrix.
-	// for the reparametrization refer Dahl et al. (2005)
-	// passed on to the 'optim' optimization function
-	/////////////////////////////////////////////////////////////////////////////////////////
-
-	// construct precision matrix from alternative parametrization
-	const arma::mat P = E1 * arma::diagmat(x) * arma::trans(E2) + E2 * arma::diagmat(x) * arma::trans(E1);
-
-	// return gradient of (minus) penalized log-likelihood: nonzero elements only
-	int p = S.n_rows;
-	const arma::mat gradMat = 2 * (arma::symmatl(S) - arma::symmatl(arma::inv_sympd(P)) + lambda * (arma::symmatl(P) - arma::symmatl(target)));
-	arma::uvec elemID = (nonzerosC - 1) * p + nonzerosR - 1;
-	return gradMat.elem(elemID);
-}
-
-// [[Rcpp::export(".armaPenLLreparGradArchI")]]
-arma::vec armaPenLLreparGradArchI(const arma::vec x, const arma::mat E1, const arma::mat E2, const arma::mat S, const double lambda, const arma::mat target, const arma::uvec nonzerosR, const arma::uvec nonzerosC){
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// gradient of 'ArchI'-ridge penalized log-likelihood for the reparametrized precision matrix.
-	// for the reparametrization refer Dahl et al. (2005)
-	// passed on to the 'optim' optimization function
-	/////////////////////////////////////////////////////////////////////////////////////////
-
-	// construct precision matrix from alternative parametrization
-	const arma::mat P = E1 * arma::diagmat(x) * arma::trans(E2) + E2 * arma::diagmat(x) * arma::trans(E1);
- 
-	// return gradient of (minus) penalized log-likelihood: nonzero elements only
-	int p = S.n_rows;
-	const arma::mat gradMat = 2 * ((1-lambda) * arma::symmatl(S) + lambda * arma::symmatl(arma::inv_sympd(target)) - arma::symmatl(arma::inv_sympd(P)));
-	arma::uvec elemID = (nonzerosC - 1) * p + nonzerosR - 1;
-	return gradMat.elem(elemID);
-}
-
-// [[Rcpp::export(".armaPenLLreparGradArchII")]]
-arma::vec armaPenLLreparGradArchII(const arma::vec x, const arma::mat E1, const arma::mat E2, const arma::mat S, const double lambda, const arma::mat target, const arma::uvec nonzerosR, const arma::uvec nonzerosC){
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// gradient of 'ArchII-ridge penalized log-likelihood for the reparametrized precision matrix.
-	// for the reparametrization refer Dahl et al. (2005)
-	// passed on to the 'optim' optimization function
-	/////////////////////////////////////////////////////////////////////////////////////////
-
-	// construct precision matrix from alternative parametrization
-	const arma::mat P = E1 * arma::diagmat(x) * arma::trans(E2) + E2 * arma::diagmat(x) * arma::trans(E1);
-
-	// return gradient of (minus) penalized log-likelihood: nonzero elements only
-	int p = S.n_rows;
-	const arma::mat gradMat = 2 * (arma::symmatl(S) + lambda * arma::eye(p,p) - arma::inv_sympd(P));
-	arma::uvec elemID = (nonzerosC - 1) * p + nonzerosR - 1;
-	return gradMat.elem(elemID);
-}
+// [[Rcpp::interfaces(r, cpp)]]
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -463,7 +44,7 @@ inline arma::mat armaP_ridge_diag(const arma::vec & S, const arma::vec & target,
 		return target;
 	}
 	arma::vec U = (S - lambda * target) / 2;
-	return arma::diagmat((sqrt(U % U + lambda) - U) / lambda);
+	return arma::diagmat((arma::sqrt(U % U + lambda) - U) / lambda);
 }
 
 inline Rcpp::List armaEigenDecomp_blockDiagOnly(const arma::mat symMat, const arma::ivec blockDims){
@@ -676,7 +257,7 @@ inline arma::mat armaVAR1_COVYhat(arma::cube Y){
 	return COVY / COVYdof;
 }
 
-inline arma::mat armaVAR1_VARYhat(arma::cube Y, bool efficient, arma::mat unbalanced ){
+inline arma::mat armaVAR1_VARYhat(arma::cube Y, bool & efficient, arma::mat & unbalanced ){
 	/////////////////////////////////////////////////////////////////////////////////////////
 	// Variance estimation of the multivariate time series data.
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -706,7 +287,7 @@ inline arma::mat armaVAR1_VARYhat(arma::cube Y, bool efficient, arma::mat unbala
 	return VARY / VARYdof;
 }
 
-inline arma::mat armaVAR1_Ahat_ridgeML(arma::mat P, arma::mat COVY, const arma::mat eigvecVARY, const arma::vec eigvalVARY, const double lambdaA, arma::mat targetA){
+inline arma::mat armaVAR1_Ahat_ridgeML(arma::mat P, arma::mat COVY, const arma::mat eigvecVARY, const arma::vec eigvalVARY, const double & lambdaA, arma::mat targetA){
 	/////////////////////////////////////////////////////////////////////////////////////////
 	// Ridge ML estimate the regression coefficient matrix A of a VAR model
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -720,7 +301,7 @@ inline arma::mat armaVAR1_Ahat_ridgeML(arma::mat P, arma::mat COVY, const arma::
 	return eigvecP * ((arma::trans(eigvecP) * (targetA + P * COVY) * eigvecVARY) / (eigvalP * arma::trans(eigvalVARY) + lambdaA)) * arma::trans(eigvecVARY);
 }
 
-inline arma::mat armaVAR1_Ahat_ridgeML_speed(arma::mat P, arma::mat COVY, const arma::mat eigvecVARY, const arma::vec eigvalVARY, const double lambdaA, arma::mat targetA){
+inline arma::mat armaVAR1_Ahat_ridgeML_speed(arma::mat P, arma::mat COVY, const arma::mat eigvecVARY, const arma::vec eigvalVARY, const double & lambdaA, arma::mat targetA){
 	/////////////////////////////////////////////////////////////////////////////////////////
 	// Ridge ML estimate the regression coefficient matrix A of a VAR model
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -734,7 +315,7 @@ inline arma::mat armaVAR1_Ahat_ridgeML_speed(arma::mat P, arma::mat COVY, const 
 	return eigvecP * ((arma::trans(eigvecP) * (targetA + P * COVY)) / (eigvalP * arma::trans(eigvalVARY) + lambdaA)) * arma::trans(eigvecVARY);
 }
 
-inline arma::mat armaVAR1_Ahat_ridgeSS(arma::mat VARY, const arma::mat & COVY, const double & lambdaA, arma::mat & targetA){
+inline arma::mat armaVAR1_Ahat_ridgeSS(arma::mat VARY, const arma::mat & COVY, const double lambdaA, arma::mat & targetA){
 	/////////////////////////////////////////////////////////////////////////////////////////
 	// Least squares estimation of the regression parameter A of a VAR(1) model
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -868,8 +449,8 @@ std::string fitA, arma::mat & unbalanced, bool & diagP, bool & efficient, const 
 	}
     
 	// evaluate likelihood
-    double logDetP; double detPsign;
-    arma::log_det(logDetP, detPsign, Phat);
+	double logDetP; double detPsign;
+	arma::log_det(logDetP, detPsign, Phat);
 	double LL = (Y.n_cols - 1) * Y.n_slices * (logDetP - arma::accu(Se % Phat)) / 2;
 
 	return Rcpp::List::create(Rcpp::Named("A") = Ahat, Rcpp::Named("P") = Phat, Rcpp::Named("LL")=LL);
@@ -1030,7 +611,7 @@ arma::mat armaVAR1_Ahat_ridgeML_forR(arma::mat P, arma::mat COVY, const arma::ma
 }
 
 // [[Rcpp::export(".armaVAR1_Ahat_ridgeSS")]]
-arma::mat armaVAR1_Ahat_ridgeSS_forR(arma::mat COVY, arma::mat VARY, const double & lambdaA, arma::mat & targetA){
+arma::mat armaVAR1_Ahat_ridgeSS_forR(arma::mat VARY, arma::mat COVY, const double & lambdaA, arma::mat & targetA){
 	// see armaVARX1_Ahat_ridgeSS
 	return armaVAR1_Ahat_ridgeSS(VARY, COVY, lambdaA, targetA);
 }
@@ -1052,3 +633,4 @@ const double armaVAR1_loglik_forR(Rcpp::NumericVector Yraw, arma::mat A, arma::m
 	arma::cube Y = armaArray2cube(Yraw);
 	return armaVAR1_loglik(Y, A, P);
 }
+
