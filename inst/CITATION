@@ -11,5 +11,5 @@ citEntry(entry="Article",
     textVersion =
       paste("Miok, V., Wilting, S.M., van Wieringen, W.N. (2016). ",
 		"Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data ", 
-        	"submitted", sep = "")
+        	"Biometrical Journal (accepted)", sep = "")
 )
