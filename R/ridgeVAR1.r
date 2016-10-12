@@ -74,14 +74,14 @@ ridgeVAR1 <- function(Y, lambdaA=0, lambdaP=0, targetA=matrix(0, dim(Y)[1], dim(
 	if (is.na(minSuccDiff)){ stop("Input (minSuccDiff) is not a positive number.") }
 	if (minSuccDiff <= 0){ stop("Input (minSuccDiff) is not a positive number.") }
 	if (!is.null(targetA) & as.character(class(targetA)) != "matrix"){ stop("Input (targetA) is of wrong class.") }
-	if (is.null(targetP)){ targetP <- "Null" }    
-	if (!is.null(targetP) & (as.character(class(targetP)) != "matrix" & as.character(class(targetP)) != "character")){ stop("Input (targetP) is of wrong class.") }    
-	if (!is.null(targetP) & as.character(class(targetP)) == "matrix"){ if(!isSymmetric(targetP)){ stop("Non-symmetrical target for the precision matrix provided") } } 
-	if (diagP & !is.null(targetP) &  as.character(class(targetP)) == "matrix"){ if(max(abs(upper.tri(targetP))) != 0){ stop("Inconsistent input (targetP v. diagP) provided") } }
-	if (!is.null(targetP) & as.character(class(targetP)) == "character"){ if( length(intersect(targetP, c("DAIE", "DIAES", "DUPV", "DAPV", "DCPV", "DEPV", "Null"))) != 1 ){ stop("Wrong default target for the precision matrix provided: see default.target for the options.") } } 
 	if (!is.null(targetA)){ if (dim(Y)[1] != nrow(targetA)){ stop("Dimensions of input (targetA) do not match that of other input (Y).") } }
 	if (!is.null(targetA)){ if (dim(Y)[1] != ncol(targetA)){ stop("Dimensions of input (targetA) do not match that of other input (Y).") } }
-	if (!is.null(targetP) & as.character(class(targetP)) == "matrix"){ if (dim(Y)[1] != nrow(targetP)){ stop("Dimensions of input (targetP) do not match that of other input (Y).") } }
+	if (as.character(class(targetP)) != "matrix"){ stop("Input (targetP) is of wrong class.") }    
+	if (as.character(class(targetP)) == "matrix"){ if(!isSymmetric(targetP)){ stop("Non-symmetrical target for the precision matrix provided") } } 
+	if (diagP & as.character(class(targetP)) == "matrix"){ if(max(abs(targetP[upper.tri(targetP)])) != 0){ stop("Inconsistent input (targetP v. diagP) provided") } }
+ 	if (as.character(class(targetPtype)) != "character"){ stop("Input (targetPtype) of wrong class.") } 
+    if (targetPtype != "none"){ if( length(intersect(targetPtype, c("DAIE", "DIAES", "DUPV", "DAPV", "DCPV", "DEPV", "Null"))) != 1 ){ stop("Wrong default target for the precision matrix provided: see default.target for the options.") } } 
+	if (as.character(class(targetP)) == "matrix"){ if (dim(Y)[1] != nrow(targetP)){ stop("Dimensions of input (targetP) do not match that of other input (Y).") } }
 	if (!is.null(zerosA) & as.character(class(zerosA)) != "matrix"){ stop("Input (zerosA) is of wrong class.") }    
 	if (!is.null(zerosA)){ if(ncol(zerosA) != 2){ stop("Wrong dimensions of the (zerosA) matrix.") } } 
 	if (!is.null(zerosA)){ zerosA <- zerosA[order(zerosA[,2], zerosA[,1]),] }
@@ -117,11 +117,11 @@ ridgeVAR1 <- function(Y, lambdaA=0, lambdaP=0, targetA=matrix(0, dim(Y)[1], dim(
             
             # estimate A
             if (nrow(zerosA) == 0){
-                Ahat <- .armaVAR1_Ahat_ridgeSS(COVY, VARY, lambdaA, targetA)
+                Ahat <- .armaVAR1_Ahat_ridgeSS(VARY, COVY, lambdaA, targetA)
             } else {
                 # eigen-decomposition of VARY
                 VARY <- .armaEigenDecomp(VARY)            
-                Ahat <- .armaVAR1_Ahat_zeros(COVY, VARY$vectors, VARY$values, lambdaA, targetA, fitA, zerosA[,1], zerosA[,2], zerosAfit)
+                Ahat <- .armaVAR1_Ahat_zeros(diag(dim(Y)[1]), COVY, VARY$vectors, VARY$values, lambdaA, targetA, fitA, zerosA[,1], zerosA[,2], zerosAfit)
             }
 
             # calculate Se
