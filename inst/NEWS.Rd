@@ -2,6 +2,18 @@
 \title{News for Package \pkg{ragt2ridges}}
 \newcommand{\cpkg}{\href{http://cran.r-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.4}{
+ \itemize{
+    \item Bug repaired in the \code{graphVAR1}-function. Input combination \code{type="globalPC"} and \code{prune=TRUE} produced a warning. 
+    \item Some code from Rcpp-functions replaced by slightly more efficient code.     
+    \item Meaningless code from Rcpp-functions removed. 
+    \item Citation updated. 
+    \item More data from the same experiment have been added. Documentation modified accordingly. Of note: the original data have been renamed to \code{hpvP53rna}.
+    \item A misnomer in the output and documentation of the \code{nodeStatsVAR1}-function fixed.
+    \item The formula of the VAR(1) model is added to documentation of the \code{ridgeVAR1}-function.  
+  }
+}
+
 \section{Changes in version 0.2.3}{
  \itemize{
     \item Some re-organization of the src-directory. 

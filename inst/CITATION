@@ -4,12 +4,13 @@ citEntry(entry="Article",
     title = "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data",
     author = personList(as.person("Miok, V"), as.person("Wilting, S M"), as.person("van Wieringen, W N")),
     journal = "Biometrical Journal",
-    volume = "", 
-    number = "", 
-    pages =  "",
-    year = 2016,
+    volume = "59", 
+    number = "1", 
+    pages =  "172-191",
+    year = 2017,
     textVersion =
-      paste("Miok, V., Wilting, S.M., van Wieringen, W.N. (2016). ",
+      paste("Miok, V., Wilting, S.M., van Wieringen, W.N. (2017). ",
 		"Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data ", 
-        	"Biometrical Journal (accepted)", sep = "")
+        	"Biometrical Journal, 59(1), 172-191", sep = "")
 )
+
