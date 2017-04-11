@@ -1,3 +1,7 @@
+importFrom(abind, abind)
+
+importFrom(MASS, ginv)
+
 importFrom(mvtnorm, rmvnorm)
 
 importFrom(rags2ridges, covML, evaluateS, evaluateSfit, ridgePathS, symm, ridgeS, adjacentMat, default.target)
@@ -30,7 +34,7 @@ importFrom(expm, "%^%")
 
 exportPattern("^[[:alpha:]]+")
 
-useDynLib(ragt2ridges)
+useDynLib(ragt2ridges, .registration=TRUE)
 
 
 
