@@ -124,7 +124,7 @@ Rcpp::NumericVector armaPenLLreparPforNLM(const arma::vec x, const arma::mat E1,
 }
 
 // [[Rcpp::export(".armaPenLLreparP")]]
-const double armaPenLLreparP(const arma::vec x, const arma::mat E1, const arma::mat E2, const arma::mat S, const double lambda, const arma::mat target, const arma::uvec nonzerosR, const arma::uvec nonzerosC){
+double armaPenLLreparP(const arma::vec x, const arma::mat E1, const arma::mat E2, const arma::mat S, const double lambda, const arma::mat target, const arma::uvec nonzerosR, const arma::uvec nonzerosC){
 	/////////////////////////////////////////////////////////////////////////////////////////
 	// ridge penalized log-likelihood for the reparametrized precision matrix.
 	// for the reparametrization refer Dahl et al. (2005)
