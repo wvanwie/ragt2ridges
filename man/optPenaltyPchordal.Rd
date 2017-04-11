@@ -30,7 +30,7 @@ See the function \code{optim} for details on the implementation of the Brent alg
 A \code{numeric} with the LOOCV optimal choice for the ridge penalty parameter.
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2016), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, accepted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191.
 
 Van Wieringen, W.N. and Peeters, C.F.W. (2016), "Ridge Estimation of Inverse Covariance Matrices from High-Dimensional Data", \emph{Computational Statistics and Data Analysis}, 103, 284-303.
 }

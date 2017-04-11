@@ -24,7 +24,7 @@ nBands=1, percZeros=0.9, stationary=TRUE)
 A \code{matrix} with auto-regression coefficient matrix \eqn{\mathbf{A}} of the VAR(1) model.
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2016), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, accepted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191.
 }
 \author{
 Viktorian Miok, Wessel N. van Wieringen <w.vanwieringen@vumc.nl>.

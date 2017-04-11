@@ -23,7 +23,7 @@ optimizer="nlm", ...)
 A \code{numeric} with the LOOCV optimal choice for the ridge penalty parameter.
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2016), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, accepted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191.
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

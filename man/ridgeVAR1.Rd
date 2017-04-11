@@ -4,7 +4,7 @@
 Ridge ML estimation of the VAR(1) model
 }
 \description{
-Ridge penalized maximum likelihood estimation of the parameters of the first-order Vector Auto-Regressive model, with a (possibly) unbalanced experimental set-up. The VAR(1)-process is assumed to have mean zero.
+Ridge penalized maximum likelihood estimation of the parameters of the VAR(1), first-order vector auto-regressive, model. The VAR(1) model explains the current vector of observations \eqn{\mathbf{Y}_{\ast,t+1}} by a linear combination of the previous observation vector: \eqn{\mathbf{Y}_{\ast,t+1} = \mathbf{A} \mathbf{Y}_{\ast,t} + \mathbf{\varepsilon}_{\ast,t+1}}, where \eqn{\mathbf{A}} is the autoregression coefficient matrix and \eqn{\mathbf{\varepsilon}_{\ast,t+1}} the vector of errors (or innovations). The VAR(1)-process is assumed to have mean zero. The experimental design is allowed to be unbalanced. 
 }
 \usage{
 ridgeVAR1(Y, lambdaA=0, lambdaP=0, 
@@ -52,7 +52,7 @@ A list-object with slots:
 When the target of the precision matrix is specified through the \code{targetPtype}-argument, the target is data-driven (for both \code{fitA="ss"} and \code{fitA="ml"}). In particular, it is updated at each iteration when \code{fitA="ml"}. 
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2016), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, accepted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

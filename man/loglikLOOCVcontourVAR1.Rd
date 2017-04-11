@@ -4,7 +4,7 @@
 Contourplot of LOOCV log-likelihood of VAR(1) model
 }
 \description{
-Evaluates the leave-one-out cross-validated log-likelihood of the VAR(1) model for a given grid of the ridge penalty parameters (\eqn{\lambda_a} and \eqn{\lambda_{\omega}} for the regression coefficient matrix \eqn{\mathbf{A}} and the inverse error covariance matrix \eqn{\mathbf{\Omega}_{\varepsilon} (=\mathbf{\Sigma_{\varepsilon}^{-1}})}, respectively). The result is plotted as a contour plot, which facilitates the choice of optimal penalty parameters. The functions also works with a (possibly) unbalanced experimental set-up. The VAR(1)-process is assumed to have mean zero.
+Evaluates the leave-one-out cross-validated log-likelihood of the VAR(1) model for a given grid of the ridge penalty parameters (\eqn{\lambda_a} and \eqn{\lambda_{\omega}}) for the regression coefficient matrix \eqn{\mathbf{A}} and the inverse error covariance matrix \eqn{\mathbf{\Omega}_{\varepsilon} (=\mathbf{\Sigma_{\varepsilon}^{-1}})}, respectively). The result is plotted as a contour plot, which facilitates the choice of optimal penalty parameters. The function also works with a (possibly) unbalanced experimental set-up. The VAR(1)-process is assumed to have mean zero.
 }
 \usage{
 loglikLOOCVcontourVAR1(lambdaAgrid, lambdaPgrid, Y, figure=TRUE, 
@@ -16,16 +16,16 @@ verbose=TRUE, ...)
 \item{Y}{ Three-dimensional \code{array} containing the data. The first, second and third dimensions correspond to covariates, time and samples, respectively. The data are assumed to centered covariate-wise. }
 \item{figure}{ A \code{logical}, indicating whether the contour plot should be generated. }
 \item{verbose}{ A \code{logical} indicator: should intermediate output be printed on the screen? }
-\item{...}{  Other arguments to be passed on to \code{loglikLOOCVVAR1}. }
+\item{...}{  Other arguments to be passed on (indirectly) to \code{\link{ridgeVAR1}}. }
 }
 \value{
-A list-object with slots:
+A \code{list}-object with slots:
 \item{lambdaA}{Grid points corresponding to \eqn{\lambda_a} (the penalty parameter for the regression coefficient matrix \eqn{\mathbf{A}}).}
 \item{lambdaP}{Grid points corresponding to \eqn{\lambda_{\omega}} (the penalty parameter for the inverse error covariance matrix \eqn{\mathbf{\Omega}_{\varepsilon} (=\mathbf{\Sigma_{\varepsilon}^{-1}})}).}
 \item{llLOOCV}{A \code{matrix} of leave-one-out cross-validated log-likelihoods. Rows and columns correspond to \eqn{\lambda_a} and \eqn{\lambda_{\omega}} values, respectively.}
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2016), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, accepted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, , 59(1), 172-191.
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

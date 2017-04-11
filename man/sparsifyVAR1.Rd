@@ -41,7 +41,7 @@ When prior to the sparsification knowledge on the support of \eqn{\mathbf{A}} is
 \references{
 Lutkepohl, H. (2005), New Introduction to Multiple Time Series Analysis. Springer, Berlin.
 
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2016), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, accepted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191.
 
 Strimmer, K. (2008), ``fdrtool: a versatile R package for estimating local and tail area-based false discovery rates'', \emph{Bioinformatics} 24(12): 1461-1462.
 
