@@ -56,17 +56,17 @@ support4ridgeP <- function(adjMat=NULL, nNodes=NULL, zeros=NULL, verbose=FALSE){
 	}
 
 	# convert adjacency into graphNel object
-	G <- igraph.to.graphNEL(graph.adjacency(adjMat, mode="undirected"))
+	G <- igraph::igraph.to.graphNEL(igraph::graph.adjacency(adjMat, mode="undirected"))
 
 	# is graph complete?
 	is.complete(G)
 
 	# check whether a chordal support has been provided
 	addedEdges <- matrix(nrow=0, ncol=2)
-	if (!is.triangulated(G)){ 
+	if (!RBGL::is.triangulated(G)){ 
 		if(verbose){ cat("-> provided zero pattern not chordal   : support is triangulated,", "\n") }
 		nEdgesOld <- numEdges(G)
-		G <- triangulate(G)
+		G <- gRbase::triangulate(G)
 		nEdgesNew <- numEdges(G)
 		addedEdges <- which(as(G, "graphAM")@adjMat - adjMat == 1, arr.ind=TRUE)
 		adjMat <- as(G, "graphAM")@adjMat
@@ -80,7 +80,7 @@ support4ridgeP <- function(adjMat=NULL, nNodes=NULL, zeros=NULL, verbose=FALSE){
 	}
 
 	# decompose in cliques and separators
-	decomp <- rip(G)
+	decomp <- gRbase::rip(G)
 	Cliques <- decomp$cliques
 	Separators <- decomp$separators
 

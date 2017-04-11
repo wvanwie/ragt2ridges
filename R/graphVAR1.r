@@ -77,11 +77,13 @@ graphVAR1 <- function(sparseA, sparseP, type="TSCG", side="left", prune=TRUE, nN
 		if (is.null(main)){ main <- "VAR(1) time-series chain graph" }
 
 		# reshuffle nodes
-		CIG <- CIGofVAR1(sparseA, sparseP, type="global")        
-		shuffle <- maximum.cardinality.search(graph.adjacency(CIG, "undirected"))$alpham1
-		sparseA <- sparseA[shuffle, shuffle]
-		sparseP <- sparseP[shuffle, shuffle]
-		nNames <- nNames[shuffle]
+		CIG <- CIGofVAR1(sparseA, sparseP, type="global")
+		if (!all(CIG==1)){
+			shuffle <- maximum.cardinality.search(graph.adjacency(CIG, "undirected"))$alpham1
+			sparseA <- sparseA[shuffle, shuffle]
+			sparseP <- sparseP[shuffle, shuffle]
+			nNames <- nNames[shuffle]
+		}
 
 		# rectangular plot layout
 		grid <- rbind(cbind(-1, 1:nrow(sparseA)), cbind(1, 1:nrow(sparseA)))
@@ -263,15 +265,15 @@ graphVAR1 <- function(sparseA, sparseP, type="TSCG", side="left", prune=TRUE, nN
 		# get global CIG
 		CIG <- CIGofVAR1(sparseA, sparseP, type="global")  
 		diag(CIG) <- 0         
-
+		
 		# prune covariate without connections (according to sparseA and sparseP)
 		if (prune){ 
-			diag(CIG) <- 0         
 			idRemove <- intersect(which(apply(CIG, 1, function(Z){ all(Z == 0) })), which(apply(CIG, 2, function(Z){ all(Z == 0) })))
 			if (length(idRemove) > 0){ 
 				sparseA <- sparseA[-idRemove, -idRemove]
 				sparseP <- sparseP[-idRemove, -idRemove] 
 				nNames <- nNames[-idRemove]
+				CIG <- CIG[-idRemove, -idRemove] 
 			}
 		}
 		nNodes <- nrow(sparseA)
@@ -292,9 +294,7 @@ graphVAR1 <- function(sparseA, sparseP, type="TSCG", side="left", prune=TRUE, nN
 		} else {
 			edge.width <- edge.width 
 		}
-        
-		# print(CIG)
-		# layout=layout_(gObj, nicely())
+
 		# actual plotting
 		plot.igraph(gObj, layout=layout.circle, vertex.size=rep(vertex.size, nNodes), vertex.label.font=vertex.label.font, 
 			vertex.color=rep(vertex.color.T0, nNodes), vertex.frame.color=vertex.frame.color,  edge.color="black",

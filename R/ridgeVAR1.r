@@ -134,10 +134,11 @@ ridgeVAR1 <- function(Y, lambdaA=0, lambdaP=0, targetA=matrix(0, dim(Y)[1], dim(
             }
 	
             # ridge ML estimation of Se
-            if (is.character(targetP)){ target <- .armaP_defaultTarget(Se, targetType=targetPtype, fraction=0.0001, multiplier=0) } else { target <- targetP }
-            Phat <- ridgePchordal(Se, lambda=lambdaP, target=target, zeros=zerosP, cliques=cliquesP, separators=separatorsP, type="Alt", verbose=FALSE)
+		if (targetPtype!="none"){ targetP <- .armaP_defaultTarget(Se, targetType=targetPtype, fraction=0.0001, multiplier=0) }
+		Phat <- ridgePchordal(Se, lambda=lambdaP, target=targetP, zeros=zerosP, cliques=cliquesP, separators=separatorsP, type="Alt", verbose=FALSE)
         }
         if (fitA == "ml"){
+		
             # set profiles of missing (time, sample)-points to missing
             if (!is.null(unbalanced)){ Y <- .armaVAR_array2cube_withMissing(Y, unbalanced[,1], unbalanced[,2]); }
 
@@ -148,16 +149,16 @@ ridgeVAR1 <- function(Y, lambdaA=0, lambdaP=0, targetA=matrix(0, dim(Y)[1], dim(
 
             # calculate Se
             Se <- .armaVAR1_Shat_ML(Y, Ahat);
-	
+
             # if cliques and separators of support of P are not provided:
             if (length(cliquesP)==0){
                 supportPinfo <- support4ridgeP(zeros=zerosP, nNodes=dim(Y)[1]);
                 cliquesP <- supportPinfo$cliques; separatorsP <- supportPinfo$separators; zerosP <- supportPinfo$zeros;
             }
-	
+
             # ridge ML estimation of Se
-            if (is.character(targetP)){ target <- .armaP_defaultTarget(Se, targetType=targetPtype, fraction=0.0001, multiplier=0) } else { target <- targetP }
-            Phat <- ridgePchordal(Se, lambda=lambdaP, target=target, zeros=zerosP, cliques=cliquesP, separators=separatorsP, type="Alt", verbose=FALSE)
+            if (targetPtype != "none"){ targetP <- .armaP_defaultTarget(Se, targetType=targetPtype, fraction=0.0001, multiplier=0) }
+            Phat <- ridgePchordal(Se, lambda=lambdaP, target=targetP, zeros=zerosP, cliques=cliquesP, separators=separatorsP, type="Alt", verbose=FALSE)
 
             ###############################################################################
             # estimate parameters by ML, using the SS estimates as initials
@@ -181,8 +182,8 @@ ridgeVAR1 <- function(Y, lambdaA=0, lambdaP=0, targetA=matrix(0, dim(Y)[1], dim(
                 Se <- .armaVAR1_Shat_ML(Y, Ahat);
 
                 # ridge ML estimation of Se
-                if (is.character(targetP)){ target <- .armaP_defaultTarget(Se, targetType=targetPtype, fraction=0.0001, multiplier=0) } else { target <- targetP }
-                Phat <- ridgePchordal(Se, lambda=lambdaP, target=target, zeros=zerosP, cliques=cliquesP, separators=separatorsP, type="Alt", verbose=FALSE)
+                if (targetPtype!="none"){ targetP <- .armaP_defaultTarget(Se, targetType=targetPtype, fraction=0.0001, multiplier=0) }
+                Phat <- ridgePchordal(Se, lambda=lambdaP, target=targetP, zeros=zerosP, cliques=cliquesP, separators=separatorsP, type="Alt", verbose=FALSE)
 		
                 # assess convergence
                 if (.armaVAR1_convergenceEvaluation(Ahat, Aprev, Phat, Pprev) < minSuccDiff){ break }

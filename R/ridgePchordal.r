@@ -76,7 +76,7 @@ ridgePchordal <- function(S, lambda, zeros, cliques=list(), separators=list(), t
 	
 	# obtain the graph components
 	diag(Pinit) <- 0 
-	components <- clusters(graph.adjacency(Pinit, mode="undirected"))$membership
+	components <- igraph::clusters(igraph::graph.adjacency(Pinit, mode="undirected"))$membership
     
 	# construct init estimate
 	Pinit <- .armaRidgePchordalInit(S=S, lambda=lambda, target=target, type=type, Cliques=cliques, Separators=separators)
@@ -102,11 +102,11 @@ ridgePchordal <- function(S, lambda, zeros, cliques=list(), separators=list(), t
 			cat(paste("-> optimization per component          : ", sep=""), "\n")  
 		}	
 
-		if (verbose){ pBar <- txtProgressBar(min=0, max=abs(length(unique(components))), style=3, char=".") }
+		if (verbose){ pBar <- utils::txtProgressBar(min=0, max=abs(length(unique(components))), style=3, char=".") }
 
 		# estimate per graph component
 		for (subG in unique(components)){
-			if (verbose){ setTxtProgressBar(pBar, subG); Sys.sleep(10^(-10)) }
+			if (verbose){ utils::setTxtProgressBar(pBar, subG); Sys.sleep(10^(-10)) }
 	
 			# construct component data    
 			ids <- which(components == subG)   

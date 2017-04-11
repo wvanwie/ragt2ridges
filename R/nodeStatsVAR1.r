@@ -31,8 +31,8 @@ nodeStatsVAR1 <- function(sparseA, sparseP, as.table = FALSE){
 	# -> eigenCentralityPy	 : vector representing the eigen centrality for each node in the global Markov graph.
 	# -> mutualInfo_Tplus1	 : vector with for each node its mutual information with all other nodes at the next (t+1) time point.
 	# -> mutualInfo_Tplus2	 : vector with for each node its mutual information with all other nodes at the (t+2)-th time point.
-	# -> itemResponse_Tplus1 : vector with for each node its  mean absolute impulse response on all other nodes at the next (t+1) time point.
-	# -> itemResponse_Tplus2 : vector with for each node its  mean absolute impulse response on all other nodes at the (t+2)-th time point.
+	# -> impulseResponse_Tplus1 : vector with for each node its  mean absolute impulse response on all other nodes at the next (t+1) time point.
+	# -> impulseResponse_Tplus2 : vector with for each node its  mean absolute impulse response on all other nodes at the (t+2)-th time point.
 	# - Future versions of this function may include additional statistics
 	# 
 	# DEPENDENCIES:
@@ -155,14 +155,14 @@ nodeStatsVAR1 <- function(sparseA, sparseP, as.table = FALSE){
 					colnames(networkStats) <- c("degreeAin", "degreeAout", "nNegAin", "nPosAin", "nNegAout", "nPosAout", "degreePe", 
 						"betweennessPe", "closenessPe", "eigenCentralityPe", "nNegPe", "nPosPe", "variancePe", "partialVarPe", "varianceY", 
 						"degreePy", "betweennessPy", "closenessPy", "eigenCentralityPy",
-                       				"mutualInfo_Tplus1", "mutualInfo_Tplus2", "itemResponse_Tplus1", "itemResponse_Tplus2")
+                       				"mutualInfo_Tplus1", "mutualInfo_Tplus2", "impulseResponse_Tplus1", "impulseResponse_Tplus2")
 			return(networkStats)
 		} 
 		if (!as.table){
 			return(list(degreeAin=degreeAin, degreeAout=degreeAout, nNegAin=nNegAin, nPosAin=nPosAin, nNegAout=nNegAout, nPosAout=nPosAout, degreePe=degreePe, 
 				     betweennessPe=betweennessPe, closenessPe=closenessPe, eigenCentralityPe=eigenCentralityPe, nNegPe=nNegPe, nPosPe=nPosPe, variancePe=varsPe, 
 				     partialVarPe=pvarsPe, varianceY=varsY, degreePy=degreePy, betweennessPy=betweennessPy, closenessPy=closenessPy, eigenCentralityPy=eigenCentralityPy,
-                     mutualInfo_Tplus1=MIatTplus1, mutualInfo_Tplus2=MIatTplus2, itemResponse_Tplus1=IRFatTplus1, itemResponse_Tplus2=IRFatTplus2))
+                     mutualInfo_Tplus1=MIatTplus1, mutualInfo_Tplus2=MIatTplus2, impulseResponse_Tplus1=IRFatTplus1, impulseResponse_Tplus2=IRFatTplus2))
 		}
 	}
 }
