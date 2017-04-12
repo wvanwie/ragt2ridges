@@ -15,7 +15,7 @@ The **ragt2ridges** package is available via
 [CRAN](http://cran.r-project.org/package=ragt2ridges) (Comprehensive R Archive Network) and can be installed from within R through:
 
 ```R
-install.packages("rags2ridges")
+install.packages("ragt2ridges")
 ```
 
 After installation run `news(package="ragt2ridges")` for the latest changes to the **ragt2ridges** package.
