@@ -7,7 +7,7 @@
 **ragt2ridges**
 ---------------
 
-The R-package **ragt2ridges** performs ridge maximum likelihood estimation of vector auto-regressive processes: the VAR(1) model (more to be added). Prior knowledge may be incorporated in the estimation through *a)* specification of the edges believed to be absent in the time series chain graph, and *b)* a shrinkage target towards which the parameter estimate is shrunken for larger penalty parameter values. Estimation functionality is accompanied by methodology for penalty parameter selection.
+The R-package **ragt2ridges** performs ridge maximum likelihood estimation of vector auto-regressive processes: the VAR(1) model (more to be added). Prior knowledge may be incorporated in the estimation through *a)* specification of the edges believed to be absent in the time series chain graph, and *b)* a shrinkage target towards which the parameter estimate is shrunken for large penalty parameter values. Estimation functionality is accompanied by methodology for penalty parameter selection.
 
 In addition, the package offers supporting functionality for the exploitation of estimated models. Among others, *i)* a procedure to infer the support of the non-sparse ridge estimate (and thereby of the time series chain graph) is implemented, *ii)* a table of node-wise network summary statistics, *iii)* mutual information analysis, and *iv)* impulse response analysis.  
 
