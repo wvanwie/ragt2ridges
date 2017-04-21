@@ -9,9 +9,9 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Wessel N. van Wieringen &amp; Viktorian Miok" />
+<meta name="author" content="Wessel N. van Wieringen1,2 &amp; Viktorian Miok1" />
 
-<meta name="date" content="2017-03-28" />
+<meta name="date" content="2017-04-21" />
 
 <title>Network models from time-course omics data   – practical</title>
 
@@ -118,16 +118,23 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Network models from time-course omics data <br /> – practical</h1>
-<h4 class="author"><em>Wessel N. van Wieringen &amp; Viktorian Miok</em></h4>
-<h4 class="date"><em>March 28, 2017</em></h4>
+<h4 class="author"><em>Wessel N. van Wieringen<sup>1,2</sup> &amp; Viktorian Miok<sup>1</sup></em></h4>
+<h4 class="date"><em>April 21, 2017</em></h4>
 
 </div>
 
 
 <p><br></p>
+<p>| <sup>1</sup>Dept. of Epidemiology &amp; Biostatistics<br />
+| Amsterdam Public Health research institute<br />
+| VU University medical center Amsterdam</p>
+<p>| <sup>2</sup>Dept. of Mathematics<br />
+| Vrije Universiteit Amsterdam</p>
+<p>| <a href="mailto:w.vanwieringen@vumc.nl">w.vanwieringen@vumc.nl</a></p>
 <div id="preliminaries" class="section level3">
 <h3>0. Preliminaries</h3>
 <p>This practical aims to acquaint the reader with the R package <code>ragt2ridges</code>, which implements the methodology described in <span class="citation">Miok, Wilting, and van Wieringen (2017)</span> and forthcoming follow-up work for network reconstruction from time-course data.</p>
+<p>The <code>ragt2ridges</code> package augments the <code>rags2ridges</code> package (<span class="citation">Peeters, Bilgrau, and van Wieringen (2017)</span>) with functionality for time-course studies. Being its sibling <code>ragt2ridges</code> mimicks <code>rags2ridges</code> in the function names.</p>
 <p>The R code included builds up: it assumes code of the previous code blocks have been executed without error.</p>
 <p><br></p>
 </div>
@@ -159,16 +166,11 @@ library(SparseTSCGM)</code></pre>
 data(hpvP53)
 
 # reformat data
-Y &lt;- longitudinal2array(t(exprs(hpvP53rna)))</code></pre>
-<p>The object <code>Y</code> contains the data in array format. Its rows, columns and slices represent the molecular entities, time points and cell lines, respectively.</p>
-<p>If desired, e.g. for speed, the pathway may be subsetted:</p>
-<pre class="r"><code># specify subset to be analyzed
-id        &lt;- sample(1:dim(Y)[1], 10)
+Y &lt;- longitudinal2array(t(exprs(hpvP53rna)))
 
-# subset both extracted and original data
-Y         &lt;- Y[id, , , drop=FALSE]
-hpvP53rna &lt;- hpvP53rna[id, ]</code></pre>
-<p>The <code>hpvP53rna</code>-object is also subsetted as it provides the names of the molecular entities, which are used later for plotting purposes.</p>
+# zero center data, variate- and cell line-wise
+Y &lt;- centerVAR1data(Y)</code></pre>
+<p>The object <code>Y</code> contains the data in array format. Its rows, columns and slices represent the molecular entities, time points and cell lines, respectively.</p>
 <p><br></p>
 </div>
 <div id="penalty-selection" class="section level4">
@@ -177,17 +179,18 @@ hpvP53rna &lt;- hpvP53rna[id, ]</code></pre>
 <p>Ridge penalized likelihood maximization requires to make an informed choice of the ridge penalty parameters: one for the autoregression coefficient matrix A and one for the precision matrix. Within the <code>ragt2ridges</code> package this is done by means of cross-validation. The penalty parameters that maximize the leave-one-out cross-validated (LOOCV) log-likelihood are considered to be optimal.</p>
 <p>Search for optimal penalty parameters:</p>
 <pre class="r"><code># find optimal penalty parameters
+# spoiler: optLambdas &lt;- c(427.94, 0.002586)
 optLambdas &lt;- optPenaltyVAR1(Y, lambdaMin=c(0.01, 0.00001), 
-                                lambdaMax=c(10, 1), 
-                                lambdaInit=c(1, 0.1))
+                                lambdaMax=c(1000, 1), 
+                                lambdaInit=c(250, 0.01))
 
 # print optimal penalty parameters
 print(optLambdas)</code></pre>
-<p>The convergence of the in-built R optimizer behind the <code>optPenaltyVAR1</code>-function needs to be assessed. This is done through visual inspection of the contour plot of the LOOCV log-likelihood.</p>
+<p>The convergence of the build-in R optimizer behind the <code>optPenaltyVAR1</code>-function needs to be assessed. This is done through visual inspection of the contour plot of the LOOCV log-likelihood.</p>
 <p>Specify grid and evaluate the LOOCV log-likelihood at these grid points:</p>
 <pre class="r"><code># define grid for both penalty parameters
-lambdaAgrid &lt;- seq(1, 4, length.out=20)
-lambdaPgrid &lt;- seq(0.001, 0.02, length.out = 20)
+lambdaAgrid &lt;- seq(100, 1000, length.out=20)
+lambdaPgrid &lt;- seq(0.0015, 0.0035, length.out = 20)
 
 # evaluate LOOCV log-likelihood over the grid
 LOOCVres    &lt;- loglikLOOCVcontourVAR1(lambdaAgrid, lambdaPgrid, 
@@ -200,7 +203,7 @@ contour(lambdaAgrid, lambdaPgrid, LOOCVres$llLOOCV, xlab=&quot;lambdaA&quot;,
 # add optimal penalty parameters as red dot
 points(optLambdas[1], optLambdas[2], pch=20, cex=2, col=&quot;red&quot;)</code></pre>
 <p>Assess whether the selected penalty parameters are indeed close to the optimum of the LOOCV log-likelihood.</p>
-<p>The LOOCV log-likelihood contour plot may indicate that the penalty parameters selected by the <code>optPenaltyVAR1</code>-function do not match with the optimum of the LOOCV log-likelihood. One option to resolve this is to use another in-built R optimizer. The optimizer to be used by the <code>optPenaltyVAR1</code>-function is specified through its <code>optimizer</code> argument. Persistence of the failure after a change of optimizer may be due to either a flat optimum of the LOOCV log-likelihood or a poor choice of the initial penalty parameter values. The latter may be fixed by a more informed initial guess which can be obtained from the contour plot with a rather coarse grid for screening.</p>
+<p>The LOOCV log-likelihood contour plot may indicate that the penalty parameters selected by the <code>optPenaltyVAR1</code>-function do not match with the optimum of the LOOCV log-likelihood. One option to resolve this is to use another build R optimizer. The optimizer to be used by the <code>optPenaltyVAR1</code>-function is specified through its <code>optimizer</code> argument. Persistence of the failure after a change of optimizer may be due to either a flat optimum of the LOOCV log-likelihood or a poor choice of the initial penalty parameter values. The latter may be fixed by a more informed initial guess which can be obtained from the contour plot with a rather coarse grid for screening.</p>
 <p><br></p>
 </div>
 <div id="penalized-estimation" class="section level4">
@@ -235,14 +238,17 @@ edgeHeat(pcor(Phat), main=&quot;ridge partial correlation estimate&quot;, diag=F
 <p>Determine support for the autoregression coefficient matrix A and error precision matrix:</p>
 <pre class="r"><code># support determination of A
 zerosA &lt;- sparsifyVAR1(A=Ahat, SigmaE=symm(solve(Phat)), 
-                       threshold=&quot;top&quot;, top=25, 
-                       statistics=FALSE, verbose=FALSE)$zeros
-
-# support determination of precision matrix
-zerosP &lt;- sparsify(Phat, threshold=&quot;top&quot;, top=10, 
+                       threshold=&quot;localFDR&quot;, FDRcut=0.95, 
+                       statistics=FALSE, verbose=FALSE)$zeros</code></pre>
+<pre><code>## Warning in pnorm(x, sd = param): NaNs produced</code></pre>
+<pre><code>## Warning in dnorm(x, sd = param, log = log): NaNs produced</code></pre>
+<pre><code>## Warning in pvt.fit.nullmodel(x, x0, statistic = statistic): Variance of
+## scale parameter set to zero due to numerical problems</code></pre>
+<pre class="r"><code># support determination of precision matrix
+zerosP &lt;- sparsify(Phat, threshold=&quot;localFDR&quot;, top=0.95, 
                        output=&quot;light&quot;, verbose=FALSE)$zeros</code></pre>
-<p>The code above simply selects the largest elements of A and those among the nonredundant elements of the partial correlation matrix of the errors.</p>
-<p>The <code>sparsify</code> and <code>sparsifyVAR1</code>-functions also offer a (slightly) more sophicated empirical Bayes approach, which is specied by the options <code>threshold=&quot;localFDR&quot;</code> in combination with <code>FDRcut=0.95</code>. This approach assumes that the (say) partial correlations stem from a two-component mixture. The two components represent the distributions of partial correlations corresponding to absent and present contemporenous edges. The null component – corresponding to absent edges – is fitted by means of truncated likelihood maximization. Then, the probability of observing a partial correlation – corresponding to an absent edge – equal to or larger than an estimated partial correlation is calculated. This probability may be endowed with a local FDR interpretation (<span class="citation">Efron (2004)</span>). The complementary probability indicates whether an edge is interesting. Edges with a complementary probability larger than a significance value are selected. The empirical Bayes approach, however, is only valid for networks with a reasonably sized number of nodes (say) at least p &gt; 50 and, consequently, a vector of 2500 regression coefficients. In this illustration p is rather small and a simple edge selection alternative is used instead.</p>
+<p>The code above selects by means of an empirical Bayes approach. This approach assumes that the (say) partial correlations stem from a two-component mixture. The two components represent the distributions of partial correlations corresponding to absent and present contemporenous edges. The null component – corresponding to absent edges – is fitted by means of truncated likelihood maximization. Then, the probability of observing a partial correlation – corresponding to an absent edge – equal to or larger than an estimated partial correlation is calculated. This probability may be endowed with a local FDR interpretation (<span class="citation">Efron (2004)</span>). The complementary probability indicates whether an edge is interesting. Edges with a complementary probability larger than a significance value are selected. The empirical Bayes approach, however, is only valid for networks with a reasonably sized number of nodes (say) at least p &gt; 50 and, consequently, a vector of 2500 regression coefficients.</p>
+<p>When p is small a simple edge selection alternative may be used instead. For instance, select the largest elements of A and those among the nonredundant elements of the partial correlation matrix of the errors. The latter is specifiied by the options <code>threshold=&quot;top&quot;</code> in combination with <code>top=25</code>.</p>
 <p><br></p>
 </div>
 <div id="re-estimation-with-inferred-support" class="section level4">
@@ -253,15 +259,18 @@ zerosP &lt;- sparsify(Phat, threshold=&quot;top&quot;, top=10,
 supportP &lt;- support4ridgeP(zeros=zerosP, nNodes=nrow(Y))
 
 # optimal penalty parameter determination
+# spoiler: optLambdas &lt;- c(2.2915, 0.005716)
 optLambdas &lt;- optPenaltyVAR1(Y, lambdaMin=c(10^(-5), 10^(-5)), 
                              lambdaMax=c(10, 0.1), lambdaInit=c(5, 0.01), 
                              zerosA=zerosA, zerosP=zerosP, 
                              cliquesP=supportP$cliques, 
                              separatorsP=supportP$separators,                              
                              zerosAfit=&quot;sparse&quot;)
+
+# print optimal penalty parameters
 print(optLambdas)</code></pre>
-<p>In the above the support of the precision matrix is reformatted as a list of cliques and separators. This requires the support to be chordal (i.e. a particularly structured graph). When this is not the case, it is casted (through triangulation) to be chordal. Effectively, this adds a minimum of edges to the support of the precision matrix such that the resulting graph is chordal. This process is called chordal embedding. The edges added in chordal embedding can be inspected through the <code>addedEdges</code>-slot of the <code>supportP</code>-object. The penalty optimization and estimation then proceed with the chordal support.</p>
-<p>The convergence of the in-built R optimizer behind the <code>optPenaltyVAR1</code>-function needs to be assessed. This is done through visual inspection of the contour plot of the LOOCV log-likelihood.</p>
+<p>In the above the support of the precision matrix is reformatted as a list of cliques and separators. This requires the support to be chordal (i.e. a particularly structured graph). When this is not the case, it is casted (through triangulation) to be chordal. Effectively, this adds a minimum, but possibly a non-negligible number, of edges to the support of the precision matrix such that the resulting graph is chordal. This process is called chordal embedding. The edges added in chordal embedding can be inspected through the <code>addedEdges</code>-slot of the <code>supportP</code>-object. The penalty optimization and estimation then proceed with the chordal support.</p>
+<p>The convergence of the build-in R optimizer behind the <code>optPenaltyVAR1</code>-function needs to be assessed. This is done through visual inspection of the contour plot of the LOOCV log-likelihood.</p>
 <p>Specify grid and evaluate the LOOCV log-likelihood at these grid points:</p>
 <pre class="r"><code># define grid for both penalty parameters
 lambdaAgrid &lt;- seq(0.001, 1.5, length.out=20)
@@ -318,7 +327,7 @@ graphVAR1(Ahat, Phat, nNames=rownames(Ahat), type=&quot;TSCG&quot;,
           vertex.label.color.T0=&quot;darkblue&quot;, 
           vertex.label.color.T1=&quot;darkblue&quot;, 
           vertex.frame.color=&quot;steelblue&quot;, vertex.color.T0=&quot;lightblue&quot;, 
-          vertex.color.T1=&quot;lightblue&quot;, edge.width=1.5, main = &quot;&quot;)</code></pre>
+          vertex.color.T1=&quot;lightblue&quot;, edge.width=1.5, main=&quot;TSCG&quot;)</code></pre>
 <p>The contemporaneous and temporal edges connect nodes from the same and different time points, respectively, and correspond to nonzero elements in the ridge estimates of the VAR(1) model parameters, i.e. precision matrix and A, respectively.</p>
 <p>Instead of the time-series chain graph one may plot the “global” (i.e., over all time) conditional independence graph. The absence/presence of an edge in this graph indicates that two subprocesses, i.e., two sets of random variables over time, are “globally” in/dependent conditional on the remaining subprocesses. A “global” conditional independence is implied by a zero partial correlation between the two random variables from any two arbitrary time points. The sparse VAR(1) model parameter estimates provide the necessary information to assess this.</p>
 <p>Determine the adjacency matrix of the “global” conditional independence graph CIG of the VAR(1) model and plot the resulting graph:</p>
@@ -338,7 +347,7 @@ Yhat &lt;- array(dim=dim(Y))
 for (i in 1:dim(Y)[3]){ Yhat[, -1, i] &lt;- Ahat %*% Y[, -dim(Y)[2], i] }</code></pre>
 <p>Assess the fit for the 1st molecular entity:</p>
 <pre class="r"><code># specify molecular entity of interest
-entityID &lt;- 1
+entityID &lt;- 3
 
 # format data for plotting
 label                &lt;- paste(&quot;CellLine&quot;, sort(rep(c(1:dim(Y)[3]), 
@@ -375,7 +384,7 @@ hist(corFit, xlab=&quot;Correlation&quot;, ylab=&quot;Frequency&quot;, main=&quo
      xlim = c(-1, 1))</code></pre>
 <p>The number of fit-vs-observation correlations in the histogram need not sum to the total number of possible correlations. Some correlations may equal <code>NA</code> and are omitted in the histogram. This is due to the fact that these molecular entities have no incoming temporal edges. Consequently, the fit is constant and its correlation with the observation is undefined.</p>
 <p>A new forecaster (e.g., of the weather) is generally benchmarked against two minimally sophicated but common-sense competitors. The first competitor forecasts the next observation by the current one (e.g., tomorrow’s weather will be like today’s). The other competitor uses the long-term average (e.g., the annual weather trend) as forecast. In the current example the latter may be operationalized as the average of the other cell lines which is then used to predict the observations of the left-out cell line.</p>
-<p>Assess whether all was not (?) in vain and benchmark the constructed VAR(1) forecaster against these two less sophicated competitors. Hereto replace the two lines in the previous code block by either:</p>
+<p>Benchmark the constructed VAR(1) forecaster against these two less sophicated competitors. Hereto replace the two lines in the previous code block by either:</p>
 <pre class="r"><code># &quot;previous observation&quot;-forecasts
 for (i in 1:dim(Y)[3]){ Yhat[, -1, i] &lt;- Y[, -dim(Y)[2], i] }</code></pre>
 <p>or:</p>
@@ -401,7 +410,7 @@ for (i1 in 1:dim(Y)[3]){
 nodeStats &lt;- nodeStatsVAR1(Ahat, Phat, as.table=TRUE)
 
 # show node degree table
-print(nodeStats[, 1:7])</code></pre>
+head(nodeStats[, 1:7])</code></pre>
 <p>From the printed table “hubs” (i.e., nodes with many connections) may be delineated. These may be further dissected into “regulators” and “regulatees” (i.e., having a large out- and in-degree, respectively). The other measures (e.g., betweenness, eigen-centrality) may also be used to identify nodes of importance (in some sense) to the network.</p>
 </div>
 <div id="mutual-information" class="section level5">
@@ -429,8 +438,8 @@ IRs &lt;- impulseResponseVAR1(Ahat, lag)</code></pre>
 <p>The <code>IRs</code>-object is a matrix with impulse responses. The (j<sub>1</sub>, j<sub>2</sub>)-th element of this matrix is the effect induced in the j<sub>1</sub>-th random variable at <code>lag</code> time points after a unit change in the j<sub>2</sub>-th innovation.</p>
 <p>Study the impulse response over larger time lags: do they decay? Also assess through which node a “regulatee” may be repressed best.</p>
 </div>
-<div id="path-analysis" class="section level5">
-<h5>1.8.4. Path analysis</h5>
+<div id="path-decomposition-analysis" class="section level5">
+<h5>1.8.4. Path decomposition analysis</h5>
 <p>Finally, the VAR(1) model may be used to decompose the covariance between a random variable at the current time point with a random variable at some future time point (conditional on all past random variables) into the contribution of all the paths in the time-series chain graph that connect these two random variables. As such it provides a means to decompose the propagation of a signal (i.e., innovation) into the contribution of each path with the time-series chain graph connecting these node. WARNING: not yet implement!</p>
 <p><br></p>
 </div>
@@ -438,10 +447,10 @@ IRs &lt;- impulseResponseVAR1(Ahat, lag)</code></pre>
 </div>
 <div id="penalized-estimation-lasso" class="section level3">
 <h3>1.9. Penalized estimation – lasso</h3>
-<p>Would one be a strong believer of lasso-type methods and its accompanying motivating sparsity assumption, he/she may wish to estimate the VAR(1) model not in ridge but lasso penalized fashion. The <code>SparseTSCGM</code>-package, implementing the work of <span class="citation">Abegaz and Wit (2013)</span>, offers something along these lines. It differs from a full ML lasso estimation procedure in two respects: a) it uses a SCAD – a lasso-relative – penalty to estimate the matrix A, and 2) the matrix A is estimated in penalized sum-of-squares fashion (in stead of penalized maximum likelihood). Furthermore, in contrast to the ridge ML estimation procedure detailed above optimal penalty parameters are chosen not through LOOCV but by means of a Bayesian information criterion.</p>
+<p>Would one be a strong believer in lasso-type methods and its accompanying motivating sparsity assumption, he/she may wish to estimate the VAR(1) model not in ridge but lasso penalized fashion. The <code>SparseTSCGM</code>-package, implementing the work of <span class="citation">Abegaz and Wit (2013)</span>, offers something along these lines. It differs from a full ML lasso estimation procedure in two respects: a) it uses a SCAD – a lasso-relative – penalty to estimate the matrix A, and 2) the matrix A is estimated in penalized sum-of-squares fashion (in stead of penalized maximum likelihood). Furthermore, in contrast to the ridge ML estimation procedure detailed above optimal penalty parameters are chosen not through LOOCV but by means of a Bayesian information criterion.</p>
 <p>Fit VAR(1) model by means of the <code>SparseTSCGM</code> implemented lasso procedure:</p>
 <pre class="r"><code># reformat data
-Y &lt;- as.longitudinal(array2longitudinal(Y))
+Y &lt;- as.longitudinal(array2longitudinal(Y[1:10,,]))
 
 # find BIC-optimal penalty parameters and fit VAR(1) model
 VAR1lasso &lt;- sparse.tscgm(Y, optimality = &quot;bic&quot;)
@@ -450,8 +459,12 @@ VAR1lasso &lt;- sparse.tscgm(Y, optimality = &quot;bic&quot;)
 Ahat           &lt;- VAR1lasso$gamma
 Phat           &lt;- VAR1lasso$theta
 rownames(Ahat) &lt;- colnames(Ahat) &lt;- rownames(Phat) &lt;- 
-                  colnames(Phat) &lt;- rownames(hpvP53rna)</code></pre>
-<p>For relatively low-dimensional data (i.e., p is smaller than number the # cell lines times # time points) the <code>SparseTSCGM</code>-implemention of the lasso estimation of the VAR(1) model converges reasonably fast. For high-dimensional data convergence is troublesome.</p>
+                  colnames(Phat) &lt;- rownames(hpvP53rna)[1:10]</code></pre>
+<p>For relatively low-dimensional data (i.e., p is smaller than the number of cell lines times the number of time points) the <code>SparseTSCGM</code>-implemention of the lasso estimation of the VAR(1) model converges reasonably fast. For high-dimensional data convergence is troublesome.</p>
+</div>
+<div id="acknowledgements" class="section level3">
+<h3>Acknowledgements</h3>
+<p>Carel F.W. Peeters provided useful comments on a preliminary version of this practical which led to this improved version.</p>
 </div>
 <div id="references" class="section level3 unnumbered">
 <h3>References</h3>
@@ -460,7 +473,7 @@ rownames(Ahat) &lt;- colnames(Ahat) &lt;- rownames(Phat) &lt;-
 <p>Abegaz, F, and E Wit. 2013. “Sparse time series chain graphical models for reconstructing genetic networks.” <em>Biostatistics</em> 13 (3): 586–99.</p>
 </div>
 <div id="ref-Efro2004">
-<p>Efron, B. 2004. “Large-Scale Simultaneous Hypothesis Testing.” <em>Journal of the American Statistical Association</em> 99 (465).</p>
+<p>Efron, B. 2004. “Large-scale simultaneous hypothesis testing.” <em>Journal of the American Statistical Association</em> 99 (465).</p>
 </div>
 <div id="ref-Miok2017">
 <p>Miok, V, S M Wilting, and W N van Wieringen. 2017. “Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data.” <em>Biometrical Journal</em> 59 (1): 172–91.</p>
@@ -470,6 +483,9 @@ rownames(Ahat) &lt;- colnames(Ahat) &lt;- rownames(Phat) &lt;-
 </div>
 <div id="ref-Oga1999">
 <p>Ogata, H, S Goto, K Sato, W Fujibuchi, H Bono, and M Kanehisa. 1999. “KEGG: Kyoto Encyclopedia of Genes and Genomes.” <em>Nucleic Acids Research</em> 27: 29–34.</p>
+</div>
+<div id="ref-Peet2017">
+<p>Peeters, C F W, A E Bilgrau, and W N van Wieringen. 2017. “rags2ridges: ridge estimation of precision matrices from high-dimensional data. R package version 2.2.” https://CRAN.R–project.org/package=rags2ridges.</p>
 </div>
 <div id="ref-VWie2016">
 <p>van Wieringen, W N, and C F W Peeters. 2016. “Ridge estimation of the inverse covariance matrix from high-dimensional data.” <em>Computational Statistics and Data Analysis</em> 103: 284–303.</p>
