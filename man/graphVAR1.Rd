@@ -4,18 +4,18 @@
 Graphs of the temporal (or contemporaneous) relations implied by the VAR(1) model
 }
 \description{
-Graphs of the (conditional independence, temporal, or contemporaneous) relations among the variates as implied by the parameters of the VAR(1).
+Graphs of the (conditional independence, temporal, or contemporaneous) relations among the variates as implied by the parameters of the VAR(1) model.
 }
 \usage{
 graphVAR1(sparseA, sparseP, type="TSCG", side="left", prune=TRUE, 
-nNames=NULL, main=NULL, vertex.color.T0="lightcyan2", 
-vertex.color.T1="lightcyan2", vertex.frame.color="steelblue", 
-vertex.label.cex=-1, vertex.label.color.T0="black", 
-vertex.label.color.T1="black", vertex.label.font=1.5, 
-vertex.size=-1, edge.arrow.size=-1, edge.width=-1, ...)
+          nNames=NULL, main=NULL, vertex.color.T0="lightcyan2", 
+          vertex.color.T1="lightcyan2", vertex.frame.color="steelblue", 
+          vertex.label.cex=-1, vertex.label.color.T0="black", 
+          vertex.label.color.T1="black", vertex.label.font=1.5, 
+          vertex.size=-1, edge.arrow.size=-1, edge.width=-1, ...)
 }
 \arguments{
-\item{sparseA}{ A \code{matrix} \eqn{\mathbf{A}} of regression parameters, which is assumed to be sparse. }
+\item{sparseA}{ A \code{matrix} \eqn{\mathbf{A}} of autoregression parameters, which is assumed to be sparse. }
 \item{sparseP}{ Precision \code{matrix} \eqn{\mathbf{\Omega}_{\varepsilon}} the error, which is assumed to be sparse. }
 \item{type}{ A \code{character} indicating what should be plotted. If \code{type="TSCG"}. the time series chain graph is plotted, while if \code{type="Aonly"} limits this graph
              to the temporal relations. If \code{type="globalPC"} or \code{type="contempPC"}, the global or contemporaneous (respectively) partial correlation graph is plotted. }
@@ -36,7 +36,7 @@ vertex.size=-1, edge.arrow.size=-1, edge.width=-1, ...)
 \item{...}{ Other arguments to be passed on to \code{plot.igraph}. }
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191.
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
@@ -47,12 +47,18 @@ Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
 }
 \examples{
 # specify VAR(1) model parameters
-A <- matrix(c(-0.1, -0.3, 0, 0.5, 0, 0, 0, 0, -0.4, -0.1, -0.3, 
-     0, 0.5, 0, 0, 0, 0, -0.4, -0.1, -0.3, 0, 0.5, 0, 0, 0, 0, 
-     -0.4, -0.1, -0.3, 0, 0.5, 0, 0, 0, 0, -0.4), byrow=TRUE, ncol=6)
-P <- matrix(c(2, 0, -0.5, 0.5, 0, 0.5, 0, 1, 0.5, 0.5, 0.5, 0, -0.5, 
-     0.5, 1, 0, 0, 0.5, 0.5, 0.5, 0, 1, 0, 0, 0, 0.5, 0, 0, 1, 0, 
-     0.5, 0, 0.5, 0, 0, 1), byrow=TRUE, ncol=6)
+A <- matrix(c(-0.1, -0.3,    0,  0.5,    0,    0, 
+                 0,    0, -0.4, -0.1, -0.3,    0,  
+               0.5,    0,    0,    0,    0, -0.4, 
+              -0.1, -0.3,    0,  0.5,    0,    0, 
+                 0,    0, -0.4, -0.1, -0.3,    0, 
+               0.5,    0,    0,    0,    0, -0.4), byrow=TRUE, ncol=6)
+P <- matrix(c(   2,    0, -0.5,  0.5,    0,  0.5, 
+                 0,    1,  0.5,  0.5,  0.5,    0, 
+              -0.5,  0.5,    1,    0,    0,  0.5, 
+               0.5,  0.5,    0,    1,    0,    0, 
+                 0,  0.5,    0,    0,    1,    0, 
+               0.5,    0,  0.5,    0,    0,    1), byrow=TRUE, ncol=6)
 
 # adjacency matrix of (global) conditional independencies.
 graphVAR1(A, P, type="TSCG")

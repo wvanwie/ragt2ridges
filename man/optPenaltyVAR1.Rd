@@ -8,14 +8,14 @@ Automatic penalty parameter selection for the VAR(1) model through maximization 
 }
 \usage{
 optPenaltyVAR1(Y, lambdaMin, lambdaMax, 
-lambdaInit=(lambdaMin+lambdaMax)/2, 
-optimizer="nlm", ...)
+               lambdaInit=(lambdaMin+lambdaMax)/2, 
+               optimizer="nlm", ...)
 }
 \arguments{
 \item{Y}{ Three-dimensional array containing the data. The first, second and third dimensions correspond to covariates, time and samples, respectively. The data are assumed to centered covariate-wise. }
-\item{ lambdaMin }{ A \code{numeric} of length two, containing the minimum values of ridge penalty parameters to be considered. The first element is the ridge parameter corresponding to the penalty on \eqn{\mathbf{A}}, the matrix with auto-regression coefficients, while the second parameter relates to the penalty on (\eqn{\mathbf{\Omega}_{\varepsilon}}, the precision matrix of the errors. }
-\item{lambdaMax}{ A \code{numeric} of length two, containing the maximum values of ridge penalty parameters to be considered. The first element is the ridge parameter corresponding to the penalty on \eqn{\mathbf{A}}, the matrix with auto-regression coefficients, while the second parameter relates to the penalty on (\eqn{\mathbf{\Omega}_{\varepsilon}}, the precision matrix of the errors. }
-\item{ lambdaInit }{ A \code{numeric} of length two, containing the initial values of ridge penalty parameters to be considered. The first element is the ridge parameter corresponding to the penalty on \eqn{\mathbf{A}}, the matrix with auto-regression coefficients, while the second parameter relates to the penalty on (\eqn{\mathbf{\Omega}_{\varepsilon}}, the precision matrix of the errors. }
+\item{ lambdaMin }{ A \code{numeric} of length two, containing the minimum values of ridge penalty parameters to be considered. The first element is the ridge parameter corresponding to the penalty on \eqn{\mathbf{A}}, the matrix with autoregression coefficients, while the second parameter relates to the penalty on (\eqn{\mathbf{\Omega}_{\varepsilon}}, the precision matrix of the errors. }
+\item{lambdaMax}{ A \code{numeric} of length two, containing the maximum values of ridge penalty parameters to be considered. The first element is the ridge parameter corresponding to the penalty on \eqn{\mathbf{A}}, the matrix with autoregression coefficients, while the second parameter relates to the penalty on (\eqn{\mathbf{\Omega}_{\varepsilon}}, the precision matrix of the errors. }
+\item{ lambdaInit }{ A \code{numeric} of length two, containing the initial values of ridge penalty parameters to be considered. The first element is the ridge parameter corresponding to the penalty on \eqn{\mathbf{A}}, the matrix with autoregression coefficients, while the second parameter relates to the penalty on (\eqn{\mathbf{\Omega}_{\varepsilon}}, the precision matrix of the errors. }
 \item{optimizer}{ A \code{character} (either \code{nlm} (default) or \code{optim}) specifying which optimization function should be used: \code{\link[stats:nlminb]{nlminb}} (default) or \code{\link[stats:constrOptim]{constrOptim}}? }
 \item{...}{ Additional arguments passed on to loglikLOOCVVAR1. }
 }
@@ -23,7 +23,7 @@ optimizer="nlm", ...)
 A \code{numeric} with the LOOCV optimal choice for the ridge penalty parameter.
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191.
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
@@ -37,7 +37,7 @@ p <- 3; n <- 4; T <- 10
 
 # set model parameters
 SigmaE <- diag(p)/4
-A <- createA(3, "chain")
+A      <- createA(3, "chain")
 
 # generate data
 Y <- dataVAR1(n, T, A, SigmaE)

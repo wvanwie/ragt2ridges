@@ -9,11 +9,11 @@ Function that visualizes the regularization paths of the parameters of the VAR(1
 }
 \usage{
 ridgePathVAR1(Y, lambdaAgrid, lambdaPgrid, pathType="A", 
-plotTypeSigmaE="pcor", diag=FALSE, verbose=TRUE, ...)
+              plotTypeSigmaE="pcor", diag=FALSE, verbose=TRUE, ...)
 }
 \arguments{
 \item{Y}{ Three-dimensional \code{array} containing the data. The first, second and third dimensions correspond to covariates, time and samples, respectively. The data are assumed to be centered covariate-wise. }
-\item{lambdaAgrid}{ A \code{numeric} of length larger than one, comprising positive numbers only. It contains the grid points corresponding to the \eqn{\lambda_a} (the penalty parameter for the regression coefficient matrix \eqn{\mathbf{A}}). }
+\item{lambdaAgrid}{ A \code{numeric} of length larger than one, comprising positive numbers only. It contains the grid points corresponding to the \eqn{\lambda_a} (the penalty parameter for the autoregression coefficient matrix \eqn{\mathbf{A}}). }
 \item{lambdaPgrid}{ A \code{numeric} of length larger than one, comprising positive numbers only. It contains the grid points corresponding to the \eqn{\lambda_{\omega}} (the penalty parameters for the inverse error covariance matrix \eqn{\mathbf{\Omega}_{\varepsilon} (=\mathbf{\Sigma_{\varepsilon}^{-1}})}). }
 \item{pathType}{ A \code{character} indicating of which parameter to plot its ridge regularization paths. Either "\code{A}" or "\code{SigmaE}". } 
 \item{plotTypeSigmaE}{ A \code{character} indicating the type of element for which a visualization of the regularization paths (of \eqn{\mathbf{\Sigma}_{\varepsilon}}) is desired. Must
@@ -41,7 +41,7 @@ p <- 3; n <- 4; T <- 10
      
 # set model parameters
 SigmaE <- diag(p)/4
-A <- createA(p, "chain")
+A      <- createA(p, "chain")
      
 # generate data
 Y <- dataVAR1(n, T, A, SigmaE)

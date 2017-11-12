@@ -1,21 +1,22 @@
-\name{nodeStatsVAR1}
-\alias{nodeStatsVAR1}
+\name{nodeStatsVAR2}
+\alias{nodeStatsVAR2}
 \title{
-VAR(1) model node statistics
+VAR(2) model node statistics
 }
 \description{
-Function that calculates for each variate various statistics from a sparse VAR(1) model
+Function that calculates for each variate various statistics from a sparse VAR(2) model
 }
 \usage{
-nodeStatsVAR1(sparseA, sparseP, as.table = FALSE)
+nodeStatsVAR2(sparseA1, sparseA2, sparseP, as.table = FALSE)
 }
 \arguments{
-\item{sparseA}{ A \code{matrix} \eqn{\mathbf{A}} of autoregression parameters, which is assumed to be sparse. }
+\item{sparseA1}{ A \code{matrix} \eqn{\mathbf{A}_1} of autoregression parameters, which is assumed to be sparse. }
+\item{sparseA2}{ A \code{matrix} \eqn{\mathbf{A}_2} of autoregression parameters, which is assumed to be sparse. }
 \item{sparseP}{ Precision \code{matrix} \eqn{\mathbf{\Omega}_{\varepsilon}} the error, which is assumed to be sparse. } 
 \item{as.table}{ A \code{logical} indicating if the output should be in tabular format. }
 }
 \details{
-The function calculates various node statistics from a sparse VAR(1) model. The input matrices \eqn{\mathbf{A}} and \eqn{\mathbf{\Omega}_{\varepsilon}} 
+The function calculates various node statistics from a sparse VAR(2) model. The input matrices \eqn{\mathbf{A}_1}, \eqn{\mathbf{A}_2} and \eqn{\mathbf{\Omega}_{\varepsilon}} 
 are assumed to be sparse autoregression coefficient and error precision matrices. From these matrices the global and contemporaneous conditional independence graphs are obtained (Dahlhaus, 2000; Dahlhaus, Eichler, 2003). 
 
 For both graph types the function calculates various measures of centrality: node degree, betweenness centrality, closeness centrality, and eigenvalue
@@ -25,12 +26,18 @@ In addition, for each variate the mutual information (with all other variates) (
 }
 \value{
 An object of class \code{list} (when \code{as.table = FALSE}) with slots:
-\item{degreeAin}{ A \code{numeric} vector with the number of (temporal) edges pointing to each node ('in'-degree). }
-\item{degreeAout}{ A \code{numeric} vector with the number of (temporal) edges leaving each node ('out'-degree). }
-\item{nNegAin}{ A \code{numeric} vector with the number of negative (temporal) edges pointing to each node. }
-\item{nPosAin}{ A \code{numeric} vector with the number of positive (temporal) edges pointing to each node ('in'-degree) }
-\item{nNegAout}{ A \code{numeric} vector with the number of negative (temporal) edges leaving each node ('out'-degree) }
-\item{nPosAout}{ A \code{numeric} vector with the number of positive (temporal) edges leaving each node ('out'-degree) }
+\item{degreeA1in}{ A \code{numeric} vector with the number of one-lag (temporal) edges pointing to each node ('in'-degree). }
+\item{degreeA1out}{ A \code{numeric} vector with the number of one-lag (temporal) edges leaving each node ('out'-degree). }
+\item{nNegA1in}{ A \code{numeric} vector with the number of negative one-lag (temporal) edges pointing to each node. }
+\item{nPosA1in}{ A \code{numeric} vector with the number of positive one-lag (temporal) edges pointing to each node ('in'-degree) }
+\item{nNegA1out}{ A \code{numeric} vector with the number of negative one-lag (temporal) edges leaving each node ('out'-degree) }
+\item{nPosA1out}{ A \code{numeric} vector with the number of positive one-lag (temporal) edges leaving each node ('out'-degree) }
+\item{degreeA2in}{ A \code{numeric} vector with the number of two-lag (temporal) edges pointing to each node ('in'-degree). }
+\item{degreeA2out}{ A \code{numeric} vector with the number of two-lag (temporal) edges leaving each node ('out'-degree). }
+\item{nNegA2in}{ A \code{numeric} vector with the number of negative two-lag (temporal) edges pointing to each node. }
+\item{nPosA2in}{ A \code{numeric} vector with the number of positive two-lag (temporal) edges pointing to each node ('in'-degree) }
+\item{nNegA2out}{ A \code{numeric} vector with the number of negative two-lag (temporal) edges leaving each node ('out'-degree) }
+\item{nPosA2out}{ A \code{numeric} vector with the number of positive two-lag (temporal) edges leaving each node ('out'-degree) }
 \item{degreePe}{ A \code{numeric} vector with the number of contemporaneous edges of each node (as implied by the error precision matrix) }
 \item{betweennessPe}{ A \code{numeric} vector representing the contemporaneous betweenness centrality for each node. }
 \item{closenessPe}{ A \code{numeric} vector representing the contemporaneous closeness centrality for each node. }
@@ -64,23 +71,25 @@ Lutkepohl, H. (2005), New Introduction to Multiple Time Series Analysis. Springe
 
 Newman, M.E.J. (2010). "Networks: an introduction", Oxford University Press.
 
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of network models from time-course omics data", \emph{submitted}. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>, Carel F.W. Peeters.
 }
 \seealso{
-\code{\link{ridgeVAR1}}, \code{\link{sparsifyVAR1}}, \code{\link{graphVAR1}}
+\code{\link{ridgeVAR2}}, \code{\link{sparsifyVAR2}}, \code{\link{graphVAR2}}
 }
 \examples{
+# specify dimension
+p <- 3
+
 # specify VAR(1) model parameters
-A <- matrix(c(-0.1, -0.3,    0, 
-               0.5,    0,    0, 
-                 0,    0, -0.4), byrow=TRUE, ncol=3)
-P <- matrix(c(   1,  0.5,    0, 
-               0.5,    1,    0, 
-                 0,    0,    1), byrow=TRUE, ncol=3)
+A1 <- -createA(p, "clique", nCliques=1, nonzeroA=0.1)
+A2 <- t(createA(p, "chain", nBands=1, nonzeroA=0.1))
+P <- matrix(c(  1, 0.5,  0, 
+              0.5,   1,  0, 
+                0,   0,  1), byrow=TRUE, ncol=3)
 
 # adjacency matrix of (global) conditional independencies.
-# nodeStatsVAR1(A, P)
+# nodeStatsVAR2(A1, A2, P)
 }

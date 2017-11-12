@@ -4,13 +4,13 @@
 Leave-one-out (minus) cross-validated log-likelihood of VAR(1) model
 }
 \description{
-Evaluation of the (minus) leave-one-out cross-validated log-likelihood of the VAR(1) model for given choices of the ridge penalty parameters (\eqn{\lambda_a} and \eqn{\lambda_{\omega}} for the regression coefficient matrix \eqn{\mathbf{A}} and the inverse error covariance matrix \eqn{\mathbf{\Omega}_{\varepsilon} (=\mathbf{\Sigma_{\varepsilon}^{-1}})}, respectively). The functions also works with a (possibly) unbalanced experimental set-up. The VAR(1)-process is assumed to have mean zero.
+Evaluation of the (minus) leave-one-out cross-validated log-likelihood of the VAR(1) model for given choices of the ridge penalty parameters (\eqn{\lambda_a} and \eqn{\lambda_{\omega}} for the autoregression coefficient matrix \eqn{\mathbf{A}} and the inverse error covariance matrix \eqn{\mathbf{\Omega}_{\varepsilon} (=\mathbf{\Sigma_{\varepsilon}^{-1}})}, respectively). The functions also works with a (possibly) unbalanced experimental set-up. The VAR(1)-process is assumed to have mean zero.
 }
 \usage{
 loglikLOOCVVAR1(lambdas, Y, unbalanced=matrix(nrow=0, ncol=2), ...)
 }
 \arguments{
-\item{lambdas}{ A \code{numeric} of length two, comprising positive values only. It contains the ridge penalty parameters to be used in the estimation of \eqn{\mathbf{A}} and the precision matrix of the errors. }
+\item{lambdas}{ A \code{numeric} of length two, comprising positive values only. It contains the ridge penalty parameters to be used in the estimation of \eqn{\mathbf{A}} and the precision matrix of the errors, respectively. }
 \item{Y}{ Three-dimensional \code{array} containing the data. The first, second and third dimensions correspond to covariates, time and samples, respectively. The data are assumed to be centered covariate-wise. }
 \item{unbalanced}{ A \code{matrix} with two columns, indicating the unbalances in the design. Each row represents a missing design point in the (time x individual)-layout. The first and second column indicate the time and individual (respectively) specifics of the missing design point. }
 \item{...}{  Other arguments to be passed to \code{ridgeVAR1}. }
@@ -23,7 +23,7 @@ The minus LOOCV log-likelihood is returned as standard optimization procedures i
 }
 
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191.
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
@@ -38,7 +38,7 @@ p <- 3; n <- 4; T <- 10
 
 # set model parameters
 SigmaE <- diag(p)/4
-A <- createA(p, "chain")
+A      <- createA(p, "chain")
 
 # generate data
 Y <- dataVAR1(n, T, A, SigmaE)

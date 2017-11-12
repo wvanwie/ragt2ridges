@@ -8,16 +8,17 @@ Ridge penalized maximum likelihood estimation of the parameters of the VAR(1), f
 }
 \usage{
 ridgeVAR1(Y, lambdaA=0, lambdaP=0, 
-targetA=matrix(0, dim(Y)[1], dim(Y)[1]), 
-targetP=matrix(0, dim(Y)[1], dim(Y)[1]), targetPtype="none",
-fitA="ml", zerosA=matrix(nrow=0, ncol=2), 
-zerosAfit="sparse", zerosP=matrix(nrow=0, ncol=2), cliquesP=list(), 
-separatorsP=list(), unbalanced=matrix(nrow=0, ncol=2), diagP=FALSE, 
-efficient=TRUE, nInit=100, minSuccDiff=0.001)
+          targetA=matrix(0, dim(Y)[1], dim(Y)[1]), 
+          targetP=matrix(0, dim(Y)[1], dim(Y)[1]), targetPtype="none",
+          fitA="ml", zerosA=matrix(nrow=0, ncol=2), 
+          zerosAfit="sparse", zerosP=matrix(nrow=0, ncol=2), 
+          cliquesP=list(), separatorsP=list(), 
+          unbalanced=matrix(nrow=0, ncol=2), diagP=FALSE, 
+          efficient=TRUE, nInit=100, minSuccDiff=0.001)
 }
 \arguments{
 \item{Y}{ Three-dimensional \code{array} containing the data. The first, second and third dimensions correspond to covariates, time and samples, respectively. The data are assumed to be centered covariate-wise. }
-\item{lambdaA}{ Ridge penalty parameter (positive \code{numeric} of length 1) to be used in the estimation of \eqn{\mathbf{A}}, the matrix with regression coefficients. }
+\item{lambdaA}{ Ridge penalty parameter (positive \code{numeric} of length 1) to be used in the estimation of \eqn{\mathbf{A}}, the matrix with autoregression coefficients. }
 \item{lambdaP}{ Ridge penalty parameter (positive \code{numeric} of length 1) to be used in the estimation of the inverse error covariance matrix (\eqn{\mathbf{\Omega}_{\varepsilon} (=\mathbf{\Sigma_{\varepsilon}^{-1}})}): the precision matrix of the errors. }
 \item{targetA}{ Target \code{matrix} to which the matrix \eqn{\mathbf{A}} is to be shrunken. }
 \item{targetP}{ Target \code{matrix} to which the in the inverse error covariance matrix, the precision matrix, is to be shrunken. }
@@ -58,7 +59,7 @@ Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VA
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
 }
 \seealso{
-\code{\link{loglikLOOCVVAR1}}, \code{\link[rags2ridges:ridgeP]{ridgeP}}, \code{\link[rags2ridges:default.target]{default.target}}.
+\code{\link{loglikLOOCVVAR1}}, \code{\link[rags2ridges:ridgeP]{ridgeP}}, \code{\link[rags2ridges:default.target]{default.target}}, \code{\link[rags2ridges:ridgePchordal]{ridgePchordal}}.
 }
 \examples{
 # set dimensions (p=covariates, n=individuals, T=time points)
@@ -66,7 +67,7 @@ p <- 3; n <- 4; T <- 10
 
 # set model parameters
 SigmaE <- diag(p)/4
-A <- createA(p, "chain")
+A      <- createA(p, "chain")
 
 # generate data
 Y <- dataVAR1(n, T, A, SigmaE)

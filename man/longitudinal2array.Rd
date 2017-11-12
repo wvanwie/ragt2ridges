@@ -27,7 +27,7 @@ p <- 3; n <- 4; T <- 10
 
 # set model parameters
 SigmaE <- diag(p)/4
-A <- createA(p, "chain")
+A      <- createA(p, "chain")
 
 # generate data
 Y <- dataVAR1(n, T, A, SigmaE)

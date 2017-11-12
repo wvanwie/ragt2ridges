@@ -1,18 +1,19 @@
-\name{dataVAR1}
-\alias{dataVAR1}
+\name{dataVAR2}
+\alias{dataVAR2}
 \title{
-Sample data from a VAR(1) model
+Sample data from a VAR(2) model
 }
 \description{
-Sample data from a VAR(1) model.
+Sample data from a VAR(2) model.
 }
 \usage{
-dataVAR1(n, T, A, SigmaE, TburnIn=1000)
+dataVAR2(n, T, A1, A2, SigmaE, TburnIn=1000)
 }
 \arguments{
 \item{n}{ Positive \code{numeric} of length one: number of individuals to be sampled. }
 \item{T}{ Positive \code{numeric} of length one: number of time points (per individual) to be sampled. }
-\item{A}{ \code{Matrix} \eqn{\mathbf{A}} of autoregression parameters. }
+\item{A1}{ A \code{matrix} \eqn{\mathbf{A}_1} of lag one autoregression parameters. }
+\item{A2}{ A \code{matrix} \eqn{\mathbf{A}_2} of lag two autoregression parameters. }
 \item{SigmaE}{ Covariance \code{matrix} of the errors (innovations). }
 \item{TburnIn}{ Positive \code{numeric} of length one: number of time points used to burn in the process. }
 }
@@ -23,19 +24,18 @@ A three dimensional \code{array} containing the data. The first, second and thir
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
 }
 \seealso{
-\code{\link{ridgeVAR1}}.
+\code{\link{dataVAR1}}, \code{\link{dataVAR2}}, \code{\link{ridgeVARX1}}, .
 }
 \examples{
 # set dimensions (p=covariates, n=individuals, T=time points)
-p <- 3; n <- 4; T <- 10
+p <- 3; n <- 12; T <- 10
 
 # set model parameters
 SigmaE <- diag(p)/4
-A      <- matrix(c(-0.1, -0.3,  0.6, 
-                    0.5, -0.4,    0, 
-                    0.3, -0.5, -0.2), byrow=TRUE, ncol=3)
+A1     <- -createA(p, "clique", nCliques=1, nonzeroA=0.1)
+A2     <- t(createA(p, "chain", nBands=1, nonzeroA=0.1))
 
 # generate data
-Y <- dataVAR1(n, T, A, SigmaE)
+Y <- dataVAR2(n, T, A1, A2, SigmaE)
 }
 

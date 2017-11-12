@@ -5,13 +5,13 @@ Impulse response analysis of the VAR(1) model
 }
 \description{
 Evaluate the impulse responses of the VAR(1) model. It assesses the effect of an innovation (error) at one time point on the 
-variates at future time points. In the VAR(1) model this amount to studying powers of \eqn{\mathbf{A}}, the matrix of regression coefficients. 
+variates at future time points. In the VAR(1) model this amounts to studying powers of \eqn{\mathbf{A}}, the matrix of autoregression coefficients. 
 }
 \usage{
 impulseResponseVAR1(A, T)
 }
 \arguments{
-\item{A}{ A \code{matrix} \eqn{\mathbf{A}} of regression parameters. }
+\item{A}{ A \code{matrix} \eqn{\mathbf{A}} of autoregression parameters. }
 \item{T}{ Positive \code{numeric} of length one specifying the time points for which the impulse response is to be evaluated. }
 }
 \value{
@@ -37,8 +37,8 @@ T <- 10
 
 # set model parameters
 SigmaE <- diag(p)/4
-A <- matrix(c(-0.1, -0.3, 0.6, 0.5, -0.4, 0, 0.3, -0.5, -0.2), 
-     byrow=TRUE, ncol=3)
+A      <- matrix(c(-0.1, -0.3, 0.6, 0.5, -0.4, 0, 0.3, -0.5, -0.2), 
+                 byrow=TRUE, ncol=3)
 
 # generate data
 Y <- dataVAR1(n, T, A, SigmaE)

@@ -8,11 +8,11 @@ Simple plots for assessment of the fit of an estimated VAR(1) model.
 }
 \usage{
 evaluateVAR1fit(Y, A, SigmaE, unbalanced=NULL, diag=FALSE, 
-fileType="eps", dir=getwd())
+                fileType="eps", dir=getwd())
 }
 \arguments{
 \item{Y}{ Three-dimensional \code{array} containing the data. The first, second and third dimensions correspond to covariates, time and samples, respectively. The data are assumed to be centered covariate-wise. }
-\item{A}{ A \code{matrix} \eqn{\mathbf{A}} of auto-regression parameters. }
+\item{A}{ A \code{matrix} \eqn{\mathbf{A}} of autoregression parameters. }
 \item{SigmaE}{ Covariance \code{matrix} of the errors (innovations). }
 \item{unbalanced}{ A \code{matrix} with two columns, indicating the unbalances in the design. Each row represents a missing design point in the (time x individual)-layout. The first and second column indicate the time and individual (respectively) specifics of the missing design point. }
 \item{diag}{ A  \code{logical}, should the diagonal be included in the evaluation of the fit. }
@@ -29,12 +29,12 @@ Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
 \code{\link[rags2ridges:evaluateSfit]{evaluateSfit}}, \code{\link{ridgeVAR1}}, \code{\link{dataVAR1}}.
 }
 \examples{
-# set dimensions
+# set dimensions (p=covariates, n=individuals, T=time points)
 p <- 3; n <- 4; T <- 10
 
 # set model parameters
 SigmaE <- diag(p)/4
-A <- createA(p, "chain")
+A      <- createA(p, "chain")
 
 # generate data
 Y <- dataVAR1(n, T, A, SigmaE)
