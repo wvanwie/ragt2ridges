@@ -1,12 +1,13 @@
-loglikLOOCVVAR1 <- function(lambdas, 
-			    Y, 
-			    unbalanced=matrix(nrow=0, ncol=2), 
-			    ...){
-	
+loglikLOOCVVAR1fused <- function(lambdas, 
+                                 Y, 
+                                 id, 
+                                 unbalanced=matrix(nrow=0, ncol=2), 
+                                 ...){
+
 	########################################################################
 	# 
 	# DESCRIPTION:
-	# Evaluation of the (minus) leave-one-out cross-validated log-likelihood
+	# Evaluation of the (minus) leave-one-out cross-validated log-likelihood 
 	# of the VAR(1) model for given choices of the ridge penalty parameters 
 	# (lambdaA and lambdaO). The functions also works with a (possibly) 
 	# unbalanced experimental set-up. The VAR(1)-process is assumed to have 
@@ -21,7 +22,7 @@ loglikLOOCVVAR1 <- function(lambdas,
 	#                   first, second and third dimensions correspond to 
 	#                   covariates, time and samples, respectively. The data 
 	#                   are assumed to centered covariate-wise. 
-	# -> unbalanced   : A matrix with two columns, indicating the unbalances
+	# -> unbalanced   : A matrix with two columns, indicating the unbalances 
 	#                   in the design. Each row represents a missing design 
 	#                   point in the (time x individual)-layout. The first 
 	#                   and second column indicate the time and individual 
@@ -43,10 +44,16 @@ loglikLOOCVVAR1 <- function(lambdas,
 	if (length(dim(Y)) != 3){ 
 		stop("Input (Y) is of wrong dimensions: either covariate, time or sample dimension is missing.") 
 	}
+	if (as.character(class(id)) != "numeric" & as.character(class(id)) != "integer"){ 
+		stop("Input (id) is of wrong class.") 
+	}
+	if (length(id) != dim(Y)[3]){ 
+		stop("Input (id) is of wrong length: should equal sample dimension of Y.") 
+	}		
 	if (as.character(class(lambdas)) != "numeric"){ 
 		stop("Input (lambdas) is of wrong class.") 
 	}
-	if (length(lambdas) != 2){ 
+	if (length(lambdas) != 3){ 
 		stop("Input (lambdas) is of wrong length.") 
 	}
 	if (any(is.na(lambdas))){ 
@@ -64,15 +71,12 @@ loglikLOOCVVAR1 <- function(lambdas,
 
 	# determine leave-one-out scheme
 	LOOscheme <- cbind(rep(2:dim(Y)[2], dim(Y)[3]), 
-			   sort(rep(1:dim(Y)[3], dim(Y)[2]-1)))	
+	                   sort(rep(1:dim(Y)[3], dim(Y)[2]-1)))	
 	if (nrow(unbalanced) > 0){
 		LOO2unbalanced <- numeric()
 		for (k in 1:nrow(unbalanced)){
 			LOO2unbalanced <- c(LOO2unbalanced, 
-	                                    which(apply(LOOscheme, 
-	                                                1, 
-	                                                function(Y, Z){ all(Y == Z) }, 
-					                Z=unbalanced[k,])))
+			                    which(apply(LOOscheme, 1, function(Y, Z){ all(Y == Z) }, Z=unbalanced[k,])))
 		}
 		LOOscheme <- LOOscheme[-LOO2unbalanced,]
 	}
@@ -80,18 +84,21 @@ loglikLOOCVVAR1 <- function(lambdas,
 	loglik <- 0
 	for (k in 1:nrow(LOOscheme)){
 		# evaluate LOOCV estimates of VAR(1) parameters A and Se
-		VAR1hat <- ridgeVAR1(Y, 
-				     lambdas[1], 
-				     lambdas[2], 
-				     unbalanced=rbind(unbalanced, LOOscheme[k,,drop=FALSE]), 
-				     ...)
-
+		VAR1hats <- ridgeVAR1fused(Y, 
+		                           id, 
+		                           lambdas[1], 
+		                           lambdas[2], 
+		                           lambdas[3], 
+		                           unbalanced=rbind(unbalanced, LOOscheme[k,,drop=FALSE]), 
+		                           ...)
+  
 		# evaluate LOOCV loglikelihood
-		loglik <- loglik + 
-			  .armaVAR1_loglik_LOOCVinternal(Y[,LOOscheme[k,1]  , LOOscheme[k,2]], 
-							 Y[,LOOscheme[k,1]-1, LOOscheme[k,2]], 
-							 VAR1hat$A, 
-							 VAR1hat$P)
+		idGroup <- id[LOOscheme[k,2]]
+		loglik  <- loglik + 
+			   .armaVAR1_loglik_LOOCVinternal(Y[,LOOscheme[k,1]  , LOOscheme[k,2]], 
+ 				                          Y[,LOOscheme[k,1]-1, LOOscheme[k,2]], 
+	                                                  VAR1hats$As[c((nrow(Y)*idGroup+1):(nrow(Y)*(idGroup+1))),], 
+						          VAR1hats$P)
 	}
 	# return minus LOOCV loglikelihood
 	return(-loglik)

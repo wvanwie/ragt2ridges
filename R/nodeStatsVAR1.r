@@ -1,4 +1,7 @@
-nodeStatsVAR1 <- function(sparseA, sparseP, as.table = FALSE){
+nodeStatsVAR1 <- function(sparseA, 
+                          sparseP, 
+                          as.table=FALSE){
+
 	#######################################################################
 	#
 	# DESCRIPTION:

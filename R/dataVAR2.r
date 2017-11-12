@@ -1,20 +1,16 @@
-dataVAR1 <- function(n, 
-                     T, 
-                     A, 
-                     SigmaE, 
-                     TburnIn=1000){
-
+dataVAR2 <- function(n, T, A1, A2, SigmaE, TburnIn=1000){
 	########################################################################
 	#
 	# DESCRIPTION:
-	# simulate data from a VAR(1) process
+	# simulate data from a VAR(2) process
 	#
 	# ARGUMENTS:
 	# -> n        : Number of individuals to be sampled.
 	# -> T        : Number of time points (per individual) to be sampled.
-	# -> A        : Matrix A of regression parameters.
+	# -> A1       : Matrix A1 with lag 1 auto-regression parameters.
+	# -> A2       : Matrix A2 with lag 2 auto-regression parameters.	
 	# -> SigmaE   : Covariance matrix of the errors (innovations).
-	# -> TburnIn  : Number of time points to burn in the process.
+	# -> TburnIn  : Number of time points to burn in the process.	
 	#
 	# DEPENDENCIES:
 	# ...
@@ -25,11 +21,14 @@ dataVAR1 <- function(n,
 	########################################################################
 
 	# input check
-	if (as.character(class(A)) != "matrix"){ 
-		stop("Input (A) is of wrong class.") 
+	if (as.character(class(A1)) != "matrix"){ 
+		stop("Input (A1) is of wrong class.") 
+	}
+	if (as.character(class(A2)) != "matrix"){ 
+		stop("Input (A2) is of wrong class.") 
 	}
 	if (as.character(class(SigmaE)) != "matrix"){ 
-		stop("Input (SigmaE) is of wrong class.") 	
+		stop("Input (SigmaE) is of wrong class.") 
 	}
 	if (!isSymmetric(SigmaE)){ 
 		stop("Non-symmetric covariance matrix is provided.") 
@@ -37,11 +36,14 @@ dataVAR1 <- function(n,
 	if (!all(eigen(SigmaE)$values > 0)){ 
 		stop("Non positive-definite covariance matrix is provided.") 
 	}
-	if (nrow(A) != ncol(A)){ 
-		stop("Matrix A is not square.") 
+	if (nrow(A1) != ncol(A1)){ 
+		stop("Matrix A1 is not square.") 
 	}
-	if (nrow(A) != nrow(SigmaE)){ 
-		stop("Dimensions covariance matrix and A do not match.") 
+	if (nrow(A2) != ncol(A2)){ 
+		stop("Matrix A2 is not square.") 
+	}	
+	if (nrow(A1) != nrow(SigmaE)){ 
+		stop("Dimensions covariance matrix and A1 do not match.") 
 	}
 	if (as.character(class(n)) != "numeric"){ 
 		stop("Input (n) is of wrong class.") 
@@ -80,22 +82,34 @@ dataVAR1 <- function(n,
 		stop("Input (TburnIn) is not a positive integer.") 
 	}
 
-	# warn user if the provided parameters do not correspond to a stationary process
-	# .isStationary(A)
-
 	# generate data
-	Y <- array(NA, dim=c(nrow(A), T, n))
-	Yupdate <- matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A), byrow=FALSE)
+	# initiation
+	Y        <- array(NA, dim=c(nrow(A1), T, n))
+	Y[,1,]   <- matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A1), byrow=TRUE)
+	Y[,2,]   <- A1 %*% Y[,1,] + 
+	            matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A1), byrow=TRUE)
+	Yupdate1 <- matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A1), byrow=FALSE)
+	Yupdate2 <- A1 %*% Yupdate1 + 
+		    matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A1), byrow=TRUE)	
+
+	# burning in
 	if (TburnIn > 0){
 		for (t in 1:TburnIn){
-	        	Yupdate <- A %*% Yupdate +
-			           matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A), byrow=TRUE)
+			Yupdate3 <- A1 %*% Yupdate2 + 
+			            A2 %*% Yupdate1 + 
+				    matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A1), byrow=TRUE)
+			Yupdate1 <- Yupdate2
+			Yupdate2 <- Yupdate3
 		}
 	}
-	Y[,1,] <- Yupdate
-	for (t in 2:T){
-        	Y[,t,] <- A %*% Y[,t-1,] + 
-		          matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A), byrow=TRUE)
+
+	# actual data generation
+	Y[,1,] <- Yupdate1
+	Y[,2,] <- Yupdate2
+	for (t in 3:T){
+        	Y[,t,] <- A1 %*% Y[,t-1,] + 
+		          A2 %*% Y[,t-2,] + 
+		          matrix(rmvnorm(n, sigma=SigmaE), nrow=nrow(A1), byrow=TRUE)
 	}
 	return(Y)
 }

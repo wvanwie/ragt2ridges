@@ -101,6 +101,102 @@
     .Call('ragt2ridges_armaPenLLreparGradArchII', PACKAGE = 'ragt2ridges', x, E1, E2, S, lambda, target, nonzerosR, nonzerosC)
 }
 
+.armaVAR1fused_Shat_ML <- function(Yraw, As, grp) {
+    .Call('ragt2ridges_armaVAR1fused_Shat_ML_forR', PACKAGE = 'ragt2ridges', Yraw, As, grp)
+}
+
+.armaVAR1fused_Ahat <- function(As, P, COVYs, eigvecVARYs, eigvalVARYs, lambdaA, lambdaF, targetA, fitA, zerosR, zerosC, zerosAfit, nInitA, minSuccDiffA) {
+    .Call('ragt2ridges_armaVAR1fused_Ahat_forR', PACKAGE = 'ragt2ridges', As, P, COVYs, eigvecVARYs, eigvalVARYs, lambdaA, lambdaF, targetA, fitA, zerosR, zerosC, zerosAfit, nInitA, minSuccDiffA)
+}
+
+.armaEigenDecomp_stackedCovariances <- function(mats) {
+    .Call('ragt2ridges_armaEigenDecomp_stackedCovariances_forR', PACKAGE = 'ragt2ridges', mats)
+}
+
+.armaVAR1fused_ridgeML <- function(Yraw, id, lambdaA, lambdaF, lambdaP, targetA, targetP, targetPtype, fitA, unbalanced, diagP, efficient, zerosR, zerosC, zerosAfit, nInit, nInitA, minSuccDiff, minSuccDiffA) {
+    .Call('ragt2ridges_armaVAR1fused_ridgeML_forR', PACKAGE = 'ragt2ridges', Yraw, id, lambdaA, lambdaF, lambdaP, targetA, targetP, targetPtype, fitA, unbalanced, diagP, efficient, zerosR, zerosC, zerosAfit, nInit, nInitA, minSuccDiff, minSuccDiffA)
+}
+
+.armaVAR1fused_convergenceEvaluation <- function(Ahat, Aprev, Phat, Pprev) {
+    .Call('ragt2ridges_armaVAR1fused_convergenceEvaluation_forR', PACKAGE = 'ragt2ridges', Ahat, Aprev, Phat, Pprev)
+}
+
+.armaVAR2_ridgeML <- function(Yraw, lambdaA1, lambdaA2, lambdaP, targetA1, targetA2, targetP, targetPtype, fitA12, unbalanced, diagP, efficient, nInit, minSuccDiff) {
+    .Call('ragt2ridges_armaVAR2_ridgeML', PACKAGE = 'ragt2ridges', Yraw, lambdaA1, lambdaA2, lambdaP, targetA1, targetA2, targetP, targetPtype, fitA12, unbalanced, diagP, efficient, nInit, minSuccDiff)
+}
+
+.armaVAR2_ridgeML_zerosA <- function(Yraw, lambdaA1, lambdaA2, lambdaP, targetA1, targetA2, targetP, targetPtype, fitA12, unbalanced, diagP, efficient, nInit, minSuccDiff, zerosRa, zerosCa, zerosRb, zerosCb, zerosA1fit, zerosA2fit) {
+    .Call('ragt2ridges_armaVAR2_ridgeML_zerosA', PACKAGE = 'ragt2ridges', Yraw, lambdaA1, lambdaA2, lambdaP, targetA1, targetA2, targetP, targetPtype, fitA12, unbalanced, diagP, efficient, nInit, minSuccDiff, zerosRa, zerosCa, zerosRb, zerosCb, zerosA1fit, zerosA2fit)
+}
+
+.armaVAR2_convergenceEvaluation <- function(Ahat, Aprev, Phat, Pprev) {
+    .Call('ragt2ridges_armaVAR2_convergenceEvaluation_forR', PACKAGE = 'ragt2ridges', Ahat, Aprev, Phat, Pprev)
+}
+
+.armaVAR2_COVYhat <- function(Yraw) {
+    .Call('ragt2ridges_armaVARY_COVYhat_forR', PACKAGE = 'ragt2ridges', Yraw)
+}
+
+.armaVAR2_VARYhat <- function(Yraw, efficient) {
+    .Call('ragt2ridges_armaVAR2_VARYhat_forR', PACKAGE = 'ragt2ridges', Yraw, efficient)
+}
+
+.armaVAR2_Ahat_ridgeSS <- function(COVY, VARY, lambdaA1, lambdaA2, targetA1, targetA2) {
+    .Call('ragt2ridges_armaVAR2_Ahat_ridgeSS_forR', PACKAGE = 'ragt2ridges', COVY, VARY, lambdaA1, lambdaA2, targetA1, targetA2)
+}
+
+.armaVAR2_Ahat_ridgeML <- function(P, COVY, eigvecVARY, eigvalVARY, lambdaA1, lambdaA2, targetA1, targetA2) {
+    .Call('ragt2ridges_armaVAR2_Ahat_ridgeML_forR', PACKAGE = 'ragt2ridges', P, COVY, eigvecVARY, eigvalVARY, lambdaA1, lambdaA2, targetA1, targetA2)
+}
+
+.armaVAR2_Shat_ML <- function(Yraw, A1, A2) {
+    .Call('ragt2ridges_armaVAR2_Shat_ML_forR', PACKAGE = 'ragt2ridges', Yraw, A1, A2)
+}
+
+.armaVAR2_Ahat_zeros <- function(P, COVY, eigvecVARY, eigvalVARY, lambdaA1, lambdaA2, targetA1, targetA2, fitA12, zerosRa, zerosCa, zerosRb, zerosCb, zerosA1fit, zerosA2fit) {
+    .Call('ragt2ridges_armaVAR2_Ahat_zeros_forR', PACKAGE = 'ragt2ridges', P, COVY, eigvecVARY, eigvalVARY, lambdaA1, lambdaA2, targetA1, targetA2, fitA12, zerosRa, zerosCa, zerosRb, zerosCb, zerosA1fit, zerosA2fit)
+}
+
+.armaVAR2_loglik_LOOCVinternal <- function(Yt2, Yt1, Yt0, A1, A2, P) {
+    .Call('ragt2ridges_armaVAR2_loglikLOOCVinternal_forR', PACKAGE = 'ragt2ridges', Yt2, Yt1, Yt0, A1, A2, P)
+}
+
+.armaVARX1_ridgeML <- function(Zraw, lambdaA, lambdaB, lambdaP, targetA, targetB, targetP, targetPtype, fitAB, unbalanced, diagP, efficient, nInit, minSuccDiff) {
+    .Call('ragt2ridges_armaVARX1_ridgeML', PACKAGE = 'ragt2ridges', Zraw, lambdaA, lambdaB, lambdaP, targetA, targetB, targetP, targetPtype, fitAB, unbalanced, diagP, efficient, nInit, minSuccDiff)
+}
+
+.armaVARX1_ridgeML_zerosC <- function(Zraw, lambdaA, lambdaB, lambdaP, targetA, targetB, targetP, targetPtype, fitAB, unbalanced, diagP, efficient, nInit, minSuccDiff, zerosRa, zerosCa, zerosRb, zerosCb, zerosAfit, zerosBfit) {
+    .Call('ragt2ridges_armaVARX1_ridgeML_zerosC', PACKAGE = 'ragt2ridges', Zraw, lambdaA, lambdaB, lambdaP, targetA, targetB, targetP, targetPtype, fitAB, unbalanced, diagP, efficient, nInit, minSuccDiff, zerosRa, zerosCa, zerosRb, zerosCb, zerosAfit, zerosBfit)
+}
+
+.armaVARX1_Chat_zeros <- function(P, COVZ, eigvecVARZ, eigvalVARZ, lambdaA, lambdaB, targetA, targetB, fitAB, zerosRa, zerosCa, zerosRb, zerosCb, zerosAfit, zerosBfit) {
+    .Call('ragt2ridges_armaVARX1_Chat_zeros_forR', PACKAGE = 'ragt2ridges', P, COVZ, eigvecVARZ, eigvalVARZ, lambdaA, lambdaB, targetA, targetB, fitAB, zerosRa, zerosCa, zerosRb, zerosCb, zerosAfit, zerosBfit)
+}
+
+.armaVARX1_Chat_ridgeSS <- function(COVZ, VARZ, lambdaA, lambdaB, targetA, targetB) {
+    .Call('ragt2ridges_armaVARX1_Chat_ridgeSS_forR', PACKAGE = 'ragt2ridges', COVZ, VARZ, lambdaA, lambdaB, targetA, targetB)
+}
+
+.armaVARX1_Chat_ridgeML <- function(P, COVZ, eigvecVARZ, eigvalVARZ, lambdaA, lambdaB, targetA, targetB) {
+    .Call('ragt2ridges_armaVARX1_Chat_ridgeML_forR', PACKAGE = 'ragt2ridges', P, COVZ, eigvecVARZ, eigvalVARZ, lambdaA, lambdaB, targetA, targetB)
+}
+
+.armaVARX1_convergenceEvaluation <- function(Chat, Cprev, Phat, Pprev) {
+    .Call('ragt2ridges_armaVARX1_convergenceEvaluation_forR', PACKAGE = 'ragt2ridges', Chat, Cprev, Phat, Pprev)
+}
+
+.armaVARX1_COVZhat <- function(Zraw, pY) {
+    .Call('ragt2ridges_armaVARX1_COVZhat_forR', PACKAGE = 'ragt2ridges', Zraw, pY)
+}
+
+.armaVARX1_Shat_ML <- function(Zraw, A, B) {
+    .Call('ragt2ridges_armaVARX1_Shat_ML_forR', PACKAGE = 'ragt2ridges', Zraw, A, B)
+}
+
+.armaVARX1_loglik_LOOCVinternal <- function(Yt1, Yt0, Xt0, A, B, P) {
+    .Call('ragt2ridges_armaVARX1_loglikLOOCVinternal_forR', PACKAGE = 'ragt2ridges', Yt1, Yt0, Xt0, A, B, P)
+}
+
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
     .Call('ragt2ridges_RcppExport_registerCCallable', PACKAGE = 'ragt2ridges')

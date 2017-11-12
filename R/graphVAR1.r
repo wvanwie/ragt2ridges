@@ -14,7 +14,8 @@ graphVAR1 <- function(sparseA,
 			vertex.label.font=1.5, 
 			vertex.size=-1, 
 			edge.arrow.size=-1, 
-			edge.width=-1, ...){
+			edge.width=-1, 
+                        ...){
 
 	#######################################################################
 	#
