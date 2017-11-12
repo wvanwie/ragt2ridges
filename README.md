@@ -22,7 +22,7 @@ install.packages("ragt2ridges")
 
 After installation run `news(package="ragt2ridges")` for the latest changes to the ```ragt2ridges```  package.
 
-Previous versions of **ragt2ridges** are available via the [CRAN archive.](http://cran.r-project.org/src/contrib/Archive/ragt2ridges/)
+Previous versions of ```ragt2ridges``` are available via the [CRAN archive.](http://cran.r-project.org/src/contrib/Archive/ragt2ridges/)
 
 
 ### References
@@ -37,7 +37,7 @@ Publications related to **ragt2ridges** include:
     "Ridge estimation of network models from time-course omics data",
      _submitted_.    
  3. van Wieringen, W.N. (2017). 
-    *"ragt2ridges: Ridge Estimation of Vector Auto-Regressive (VAR) Processes"*. 
+    "ragt2ridges: Ridge Estimation of Vector Auto-Regressive (VAR) Processes". 
     _R package_, version 0.3.0
  
 Please cite the relevant publications if you use ```ragt2ridges```.
