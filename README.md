@@ -29,15 +29,15 @@ Previous versions of **ragt2ridges** are available via the [CRAN archive.](http:
 
 Publications related to **ragt2ridges** include:
 
- 1. Miok, V., Wilting, S.M., & van Wieringen, W.N. (2017)
-    *"Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data"*.
-     _Biometrical Journal_, 59(1): 172-191
+ 1. Miok, V., Wilting, S.M., & van Wieringen, W.N. (2017).
+    "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data".
+     _Biometrical Journal_, 59(1): 172-191.
     ([doi:10.1002/bimj.201500269](http://onlinelibrary.wiley.com/doi/10.1002/bimj.201500269/abstract)). 
-2. Miok, V., Wilting, S.M., & van Wieringen, W.N. (2017)
-    *"Ridge estimation of network models from time-course omics data"*.
+ 2. Miok, V., Wilting, S.M., & van Wieringen, W.N. (2017),
+    "Ridge estimation of network models from time-course omics data",
      _submitted_.    
- 2. van Wieringen, W.N. (2017). 
+ 3. van Wieringen, W.N. (2017). 
     *"ragt2ridges: Ridge Estimation of Vector Auto-Regressive (VAR) Processes"*. 
-    _R package_, version 0.2.4
+    _R package_, version 0.3.0
  
 Please cite the relevant publications if you use **ragt2ridges**.
