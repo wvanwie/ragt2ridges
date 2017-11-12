@@ -13,14 +13,14 @@ In addition, the package offers supporting functionality for the exploitation of
 
 ### Installation
 
-The `` ragt2ridges``  package is available via
+The ```ragt2ridges```  package is available via
 [CRAN](http://cran.r-project.org/package=ragt2ridges) (Comprehensive R Archive Network) and can be installed from within R through:
 
 ```R
 install.packages("ragt2ridges")
 ```
 
-After installation run `news(package="ragt2ridges")` for the latest changes to the ```ragt2ridges``  package.
+After installation run `news(package="ragt2ridges")` for the latest changes to the ```ragt2ridges```  package.
 
 Previous versions of **ragt2ridges** are available via the [CRAN archive.](http://cran.r-project.org/src/contrib/Archive/ragt2ridges/)
 
@@ -40,4 +40,4 @@ Publications related to **ragt2ridges** include:
     *"ragt2ridges: Ridge Estimation of Vector Auto-Regressive (VAR) Processes"*. 
     _R package_, version 0.3.0
  
-Please cite the relevant publications if you use **ragt2ridges**.
+Please cite the relevant publications if you use ```ragt2ridges```.
