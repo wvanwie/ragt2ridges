@@ -4,13 +4,7 @@ importFrom(MASS, ginv)
 
 importFrom(mvtnorm, rmvnorm)
 
-importFrom(rags2ridges, covML, evaluateS, evaluateSfit, ridgePathS, symm, ridgeS, adjacentMat, default.target)
-
-importFrom(gRbase, triangulate, rip, is.complete, jTree)
-
-importFrom(RBGL, is.triangulated)
-
-importFrom(graph, numEdges)
+importFrom(rags2ridges, covML, evaluateS, evaluateSfit, ridgePathS, symm, ridgeP, adjacentMat, default.target, ridgePchordal, support4ridgeP)
 
 importFrom(graphics, contour, "legend", lines, par, plot, points, text)
 
@@ -28,14 +22,9 @@ importFrom(methods, as)
 
 importFrom(stats, constrOptim, cov2cor, nlm,  nlminb, optim, runif)
 
-importFrom(utils, setTxtProgressBar, txtProgressBar)
-
 importFrom(expm, "%^%")
 
 exportPattern("^[[:alpha:]]+")
 
 useDynLib(ragt2ridges, .registration=TRUE)
-
-
-
 
