@@ -696,6 +696,444 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// armaVAR1fused_Shat_ML_forR
+arma::mat armaVAR1fused_Shat_ML_forR(Rcpp::NumericVector& Yraw, arma::mat& As, arma::ivec grp);
+RcppExport SEXP ragt2ridges_armaVAR1fused_Shat_ML_forR(SEXP YrawSEXP, SEXP AsSEXP, SEXP grpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Yraw(YrawSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type As(AsSEXP);
+    Rcpp::traits::input_parameter< arma::ivec >::type grp(grpSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR1fused_Shat_ML_forR(Yraw, As, grp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR1fused_Ahat_forR
+arma::mat armaVAR1fused_Ahat_forR(arma::mat& As, arma::mat P, arma::mat& COVYs, arma::mat eigvecVARYs, arma::vec eigvalVARYs, const double lambdaA, const double lambdaF, const arma::mat& targetA, std::string fitA, const arma::uvec& zerosR, const arma::uvec& zerosC, std::string zerosAfit, int nInitA, const double minSuccDiffA);
+RcppExport SEXP ragt2ridges_armaVAR1fused_Ahat_forR(SEXP AsSEXP, SEXP PSEXP, SEXP COVYsSEXP, SEXP eigvecVARYsSEXP, SEXP eigvalVARYsSEXP, SEXP lambdaASEXP, SEXP lambdaFSEXP, SEXP targetASEXP, SEXP fitASEXP, SEXP zerosRSEXP, SEXP zerosCSEXP, SEXP zerosAfitSEXP, SEXP nInitASEXP, SEXP minSuccDiffASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type As(AsSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type P(PSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type COVYs(COVYsSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type eigvecVARYs(eigvecVARYsSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type eigvalVARYs(eigvalVARYsSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA(lambdaASEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaF(lambdaFSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA(targetASEXP);
+    Rcpp::traits::input_parameter< std::string >::type fitA(fitASEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosR(zerosRSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosC(zerosCSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosAfit(zerosAfitSEXP);
+    Rcpp::traits::input_parameter< int >::type nInitA(nInitASEXP);
+    Rcpp::traits::input_parameter< const double >::type minSuccDiffA(minSuccDiffASEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR1fused_Ahat_forR(As, P, COVYs, eigvecVARYs, eigvalVARYs, lambdaA, lambdaF, targetA, fitA, zerosR, zerosC, zerosAfit, nInitA, minSuccDiffA));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaEigenDecomp_stackedCovariances_forR
+Rcpp::List armaEigenDecomp_stackedCovariances_forR(arma::mat& mats);
+RcppExport SEXP ragt2ridges_armaEigenDecomp_stackedCovariances_forR(SEXP matsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type mats(matsSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaEigenDecomp_stackedCovariances_forR(mats));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR1fused_ridgeML_forR
+Rcpp::List armaVAR1fused_ridgeML_forR(Rcpp::NumericVector& Yraw, arma::ivec id, const double lambdaA, const double lambdaF, const double lambdaP, const arma::mat& targetA, const arma::mat& targetP, std::string targetPtype, std::string fitA, arma::mat unbalanced, bool diagP, bool efficient, const arma::uvec& zerosR, const arma::uvec& zerosC, std::string zerosAfit, const int nInit, const int nInitA, const double minSuccDiff, const double minSuccDiffA);
+RcppExport SEXP ragt2ridges_armaVAR1fused_ridgeML_forR(SEXP YrawSEXP, SEXP idSEXP, SEXP lambdaASEXP, SEXP lambdaFSEXP, SEXP lambdaPSEXP, SEXP targetASEXP, SEXP targetPSEXP, SEXP targetPtypeSEXP, SEXP fitASEXP, SEXP unbalancedSEXP, SEXP diagPSEXP, SEXP efficientSEXP, SEXP zerosRSEXP, SEXP zerosCSEXP, SEXP zerosAfitSEXP, SEXP nInitSEXP, SEXP nInitASEXP, SEXP minSuccDiffSEXP, SEXP minSuccDiffASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Yraw(YrawSEXP);
+    Rcpp::traits::input_parameter< arma::ivec >::type id(idSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA(lambdaASEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaF(lambdaFSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaP(lambdaPSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA(targetASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetP(targetPSEXP);
+    Rcpp::traits::input_parameter< std::string >::type targetPtype(targetPtypeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type fitA(fitASEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type unbalanced(unbalancedSEXP);
+    Rcpp::traits::input_parameter< bool >::type diagP(diagPSEXP);
+    Rcpp::traits::input_parameter< bool >::type efficient(efficientSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosR(zerosRSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosC(zerosCSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosAfit(zerosAfitSEXP);
+    Rcpp::traits::input_parameter< const int >::type nInit(nInitSEXP);
+    Rcpp::traits::input_parameter< const int >::type nInitA(nInitASEXP);
+    Rcpp::traits::input_parameter< const double >::type minSuccDiff(minSuccDiffSEXP);
+    Rcpp::traits::input_parameter< const double >::type minSuccDiffA(minSuccDiffASEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR1fused_ridgeML_forR(Yraw, id, lambdaA, lambdaF, lambdaP, targetA, targetP, targetPtype, fitA, unbalanced, diagP, efficient, zerosR, zerosC, zerosAfit, nInit, nInitA, minSuccDiff, minSuccDiffA));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR1fused_convergenceEvaluation_forR
+double armaVAR1fused_convergenceEvaluation_forR(arma::mat& Ahat, arma::mat& Aprev, arma::mat& Phat, arma::mat& Pprev);
+RcppExport SEXP ragt2ridges_armaVAR1fused_convergenceEvaluation_forR(SEXP AhatSEXP, SEXP AprevSEXP, SEXP PhatSEXP, SEXP PprevSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type Ahat(AhatSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Aprev(AprevSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Phat(PhatSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Pprev(PprevSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR1fused_convergenceEvaluation_forR(Ahat, Aprev, Phat, Pprev));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_ridgeML
+Rcpp::List armaVAR2_ridgeML(Rcpp::NumericVector& Yraw, const double lambdaA1, const double lambdaA2, const double lambdaP, const arma::mat& targetA1, const arma::mat& targetA2, arma::mat& targetP, std::string targetPtype, std::string fitA12, arma::mat unbalanced, bool diagP, bool efficient, const int nInit, const double minSuccDiff);
+RcppExport SEXP ragt2ridges_armaVAR2_ridgeML(SEXP YrawSEXP, SEXP lambdaA1SEXP, SEXP lambdaA2SEXP, SEXP lambdaPSEXP, SEXP targetA1SEXP, SEXP targetA2SEXP, SEXP targetPSEXP, SEXP targetPtypeSEXP, SEXP fitA12SEXP, SEXP unbalancedSEXP, SEXP diagPSEXP, SEXP efficientSEXP, SEXP nInitSEXP, SEXP minSuccDiffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Yraw(YrawSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA1(lambdaA1SEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA2(lambdaA2SEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaP(lambdaPSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA1(targetA1SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA2(targetA2SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type targetP(targetPSEXP);
+    Rcpp::traits::input_parameter< std::string >::type targetPtype(targetPtypeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type fitA12(fitA12SEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type unbalanced(unbalancedSEXP);
+    Rcpp::traits::input_parameter< bool >::type diagP(diagPSEXP);
+    Rcpp::traits::input_parameter< bool >::type efficient(efficientSEXP);
+    Rcpp::traits::input_parameter< const int >::type nInit(nInitSEXP);
+    Rcpp::traits::input_parameter< const double >::type minSuccDiff(minSuccDiffSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_ridgeML(Yraw, lambdaA1, lambdaA2, lambdaP, targetA1, targetA2, targetP, targetPtype, fitA12, unbalanced, diagP, efficient, nInit, minSuccDiff));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_ridgeML_zerosA
+Rcpp::List armaVAR2_ridgeML_zerosA(Rcpp::NumericVector& Yraw, const double lambdaA1, const double lambdaA2, const double lambdaP, const arma::mat& targetA1, const arma::mat& targetA2, arma::mat& targetP, std::string targetPtype, std::string fitA12, arma::mat unbalanced, bool diagP, bool efficient, const int nInit, const double minSuccDiff, const arma::uvec& zerosRa, const arma::uvec& zerosCa, const arma::uvec& zerosRb, const arma::uvec& zerosCb, std::string zerosA1fit, std::string zerosA2fit);
+RcppExport SEXP ragt2ridges_armaVAR2_ridgeML_zerosA(SEXP YrawSEXP, SEXP lambdaA1SEXP, SEXP lambdaA2SEXP, SEXP lambdaPSEXP, SEXP targetA1SEXP, SEXP targetA2SEXP, SEXP targetPSEXP, SEXP targetPtypeSEXP, SEXP fitA12SEXP, SEXP unbalancedSEXP, SEXP diagPSEXP, SEXP efficientSEXP, SEXP nInitSEXP, SEXP minSuccDiffSEXP, SEXP zerosRaSEXP, SEXP zerosCaSEXP, SEXP zerosRbSEXP, SEXP zerosCbSEXP, SEXP zerosA1fitSEXP, SEXP zerosA2fitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Yraw(YrawSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA1(lambdaA1SEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA2(lambdaA2SEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaP(lambdaPSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA1(targetA1SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA2(targetA2SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type targetP(targetPSEXP);
+    Rcpp::traits::input_parameter< std::string >::type targetPtype(targetPtypeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type fitA12(fitA12SEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type unbalanced(unbalancedSEXP);
+    Rcpp::traits::input_parameter< bool >::type diagP(diagPSEXP);
+    Rcpp::traits::input_parameter< bool >::type efficient(efficientSEXP);
+    Rcpp::traits::input_parameter< const int >::type nInit(nInitSEXP);
+    Rcpp::traits::input_parameter< const double >::type minSuccDiff(minSuccDiffSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosRa(zerosRaSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosCa(zerosCaSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosRb(zerosRbSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosCb(zerosCbSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosA1fit(zerosA1fitSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosA2fit(zerosA2fitSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_ridgeML_zerosA(Yraw, lambdaA1, lambdaA2, lambdaP, targetA1, targetA2, targetP, targetPtype, fitA12, unbalanced, diagP, efficient, nInit, minSuccDiff, zerosRa, zerosCa, zerosRb, zerosCb, zerosA1fit, zerosA2fit));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_convergenceEvaluation_forR
+double armaVAR2_convergenceEvaluation_forR(arma::mat& Ahat, arma::mat& Aprev, arma::mat& Phat, arma::mat& Pprev);
+RcppExport SEXP ragt2ridges_armaVAR2_convergenceEvaluation_forR(SEXP AhatSEXP, SEXP AprevSEXP, SEXP PhatSEXP, SEXP PprevSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type Ahat(AhatSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Aprev(AprevSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Phat(PhatSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Pprev(PprevSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_convergenceEvaluation_forR(Ahat, Aprev, Phat, Pprev));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARY_COVYhat_forR
+arma::mat armaVARY_COVYhat_forR(Rcpp::NumericVector& Yraw);
+RcppExport SEXP ragt2ridges_armaVARY_COVYhat_forR(SEXP YrawSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Yraw(YrawSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARY_COVYhat_forR(Yraw));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_VARYhat_forR
+arma::mat armaVAR2_VARYhat_forR(Rcpp::NumericVector& Yraw, bool efficient);
+RcppExport SEXP ragt2ridges_armaVAR2_VARYhat_forR(SEXP YrawSEXP, SEXP efficientSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Yraw(YrawSEXP);
+    Rcpp::traits::input_parameter< bool >::type efficient(efficientSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_VARYhat_forR(Yraw, efficient));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_Ahat_ridgeSS_forR
+arma::mat armaVAR2_Ahat_ridgeSS_forR(arma::mat& COVY, arma::mat& VARY, const double lambdaA1, const double lambdaA2, const arma::mat& targetA1, const arma::mat& targetA2);
+RcppExport SEXP ragt2ridges_armaVAR2_Ahat_ridgeSS_forR(SEXP COVYSEXP, SEXP VARYSEXP, SEXP lambdaA1SEXP, SEXP lambdaA2SEXP, SEXP targetA1SEXP, SEXP targetA2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type COVY(COVYSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type VARY(VARYSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA1(lambdaA1SEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA2(lambdaA2SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA1(targetA1SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA2(targetA2SEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_Ahat_ridgeSS_forR(COVY, VARY, lambdaA1, lambdaA2, targetA1, targetA2));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_Ahat_ridgeML_forR
+arma::mat armaVAR2_Ahat_ridgeML_forR(arma::mat& P, arma::mat& COVY, arma::mat& eigvecVARY, const arma::vec eigvalVARY, const double lambdaA1, const double lambdaA2, const arma::mat& targetA1, const arma::mat& targetA2);
+RcppExport SEXP ragt2ridges_armaVAR2_Ahat_ridgeML_forR(SEXP PSEXP, SEXP COVYSEXP, SEXP eigvecVARYSEXP, SEXP eigvalVARYSEXP, SEXP lambdaA1SEXP, SEXP lambdaA2SEXP, SEXP targetA1SEXP, SEXP targetA2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type P(PSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type COVY(COVYSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type eigvecVARY(eigvecVARYSEXP);
+    Rcpp::traits::input_parameter< const arma::vec >::type eigvalVARY(eigvalVARYSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA1(lambdaA1SEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA2(lambdaA2SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA1(targetA1SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA2(targetA2SEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_Ahat_ridgeML_forR(P, COVY, eigvecVARY, eigvalVARY, lambdaA1, lambdaA2, targetA1, targetA2));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_Shat_ML_forR
+arma::mat armaVAR2_Shat_ML_forR(Rcpp::NumericVector& Yraw, const arma::mat& A1, const arma::mat& A2);
+RcppExport SEXP ragt2ridges_armaVAR2_Shat_ML_forR(SEXP YrawSEXP, SEXP A1SEXP, SEXP A2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Yraw(YrawSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type A1(A1SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type A2(A2SEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_Shat_ML_forR(Yraw, A1, A2));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_Ahat_zeros_forR
+arma::mat armaVAR2_Ahat_zeros_forR(arma::mat& P, arma::mat& COVY, arma::mat& eigvecVARY, arma::vec eigvalVARY, const double lambdaA1, const double lambdaA2, const arma::mat& targetA1, const arma::mat& targetA2, std::string fitA12, const arma::uvec& zerosRa, const arma::uvec& zerosCa, const arma::uvec& zerosRb, const arma::uvec& zerosCb, std::string zerosA1fit, std::string zerosA2fit);
+RcppExport SEXP ragt2ridges_armaVAR2_Ahat_zeros_forR(SEXP PSEXP, SEXP COVYSEXP, SEXP eigvecVARYSEXP, SEXP eigvalVARYSEXP, SEXP lambdaA1SEXP, SEXP lambdaA2SEXP, SEXP targetA1SEXP, SEXP targetA2SEXP, SEXP fitA12SEXP, SEXP zerosRaSEXP, SEXP zerosCaSEXP, SEXP zerosRbSEXP, SEXP zerosCbSEXP, SEXP zerosA1fitSEXP, SEXP zerosA2fitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type P(PSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type COVY(COVYSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type eigvecVARY(eigvecVARYSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type eigvalVARY(eigvalVARYSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA1(lambdaA1SEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA2(lambdaA2SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA1(targetA1SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA2(targetA2SEXP);
+    Rcpp::traits::input_parameter< std::string >::type fitA12(fitA12SEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosRa(zerosRaSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosCa(zerosCaSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosRb(zerosRbSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosCb(zerosCbSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosA1fit(zerosA1fitSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosA2fit(zerosA2fitSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_Ahat_zeros_forR(P, COVY, eigvecVARY, eigvalVARY, lambdaA1, lambdaA2, targetA1, targetA2, fitA12, zerosRa, zerosCa, zerosRb, zerosCb, zerosA1fit, zerosA2fit));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVAR2_loglikLOOCVinternal_forR
+double armaVAR2_loglikLOOCVinternal_forR(arma::vec Yt2, arma::vec Yt1, arma::vec Yt0, arma::mat& A1, arma::mat& A2, arma::mat& P);
+RcppExport SEXP ragt2ridges_armaVAR2_loglikLOOCVinternal_forR(SEXP Yt2SEXP, SEXP Yt1SEXP, SEXP Yt0SEXP, SEXP A1SEXP, SEXP A2SEXP, SEXP PSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec >::type Yt2(Yt2SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Yt1(Yt1SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Yt0(Yt0SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type A1(A1SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type A2(A2SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type P(PSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVAR2_loglikLOOCVinternal_forR(Yt2, Yt1, Yt0, A1, A2, P));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_ridgeML
+Rcpp::List armaVARX1_ridgeML(Rcpp::NumericVector& Zraw, const double lambdaA, const double lambdaB, const double lambdaP, const arma::mat& targetA, const arma::mat& targetB, const arma::mat& targetP, std::string targetPtype, std::string fitAB, arma::mat unbalanced, bool diagP, bool efficient, const int nInit, const double minSuccDiff);
+RcppExport SEXP ragt2ridges_armaVARX1_ridgeML(SEXP ZrawSEXP, SEXP lambdaASEXP, SEXP lambdaBSEXP, SEXP lambdaPSEXP, SEXP targetASEXP, SEXP targetBSEXP, SEXP targetPSEXP, SEXP targetPtypeSEXP, SEXP fitABSEXP, SEXP unbalancedSEXP, SEXP diagPSEXP, SEXP efficientSEXP, SEXP nInitSEXP, SEXP minSuccDiffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Zraw(ZrawSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA(lambdaASEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaB(lambdaBSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaP(lambdaPSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA(targetASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetB(targetBSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetP(targetPSEXP);
+    Rcpp::traits::input_parameter< std::string >::type targetPtype(targetPtypeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type fitAB(fitABSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type unbalanced(unbalancedSEXP);
+    Rcpp::traits::input_parameter< bool >::type diagP(diagPSEXP);
+    Rcpp::traits::input_parameter< bool >::type efficient(efficientSEXP);
+    Rcpp::traits::input_parameter< const int >::type nInit(nInitSEXP);
+    Rcpp::traits::input_parameter< const double >::type minSuccDiff(minSuccDiffSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_ridgeML(Zraw, lambdaA, lambdaB, lambdaP, targetA, targetB, targetP, targetPtype, fitAB, unbalanced, diagP, efficient, nInit, minSuccDiff));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_ridgeML_zerosC
+Rcpp::List armaVARX1_ridgeML_zerosC(Rcpp::NumericVector& Zraw, const double lambdaA, const double lambdaB, const double lambdaP, const arma::mat& targetA, const arma::mat& targetB, const arma::mat& targetP, std::string targetPtype, std::string fitAB, arma::mat unbalanced, bool diagP, bool efficient, const int nInit, const double minSuccDiff, const arma::uvec& zerosRa, const arma::uvec& zerosCa, const arma::uvec& zerosRb, const arma::uvec& zerosCb, std::string zerosAfit, std::string zerosBfit);
+RcppExport SEXP ragt2ridges_armaVARX1_ridgeML_zerosC(SEXP ZrawSEXP, SEXP lambdaASEXP, SEXP lambdaBSEXP, SEXP lambdaPSEXP, SEXP targetASEXP, SEXP targetBSEXP, SEXP targetPSEXP, SEXP targetPtypeSEXP, SEXP fitABSEXP, SEXP unbalancedSEXP, SEXP diagPSEXP, SEXP efficientSEXP, SEXP nInitSEXP, SEXP minSuccDiffSEXP, SEXP zerosRaSEXP, SEXP zerosCaSEXP, SEXP zerosRbSEXP, SEXP zerosCbSEXP, SEXP zerosAfitSEXP, SEXP zerosBfitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Zraw(ZrawSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA(lambdaASEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaB(lambdaBSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaP(lambdaPSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA(targetASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetB(targetBSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetP(targetPSEXP);
+    Rcpp::traits::input_parameter< std::string >::type targetPtype(targetPtypeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type fitAB(fitABSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type unbalanced(unbalancedSEXP);
+    Rcpp::traits::input_parameter< bool >::type diagP(diagPSEXP);
+    Rcpp::traits::input_parameter< bool >::type efficient(efficientSEXP);
+    Rcpp::traits::input_parameter< const int >::type nInit(nInitSEXP);
+    Rcpp::traits::input_parameter< const double >::type minSuccDiff(minSuccDiffSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosRa(zerosRaSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosCa(zerosCaSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosRb(zerosRbSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosCb(zerosCbSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosAfit(zerosAfitSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosBfit(zerosBfitSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_ridgeML_zerosC(Zraw, lambdaA, lambdaB, lambdaP, targetA, targetB, targetP, targetPtype, fitAB, unbalanced, diagP, efficient, nInit, minSuccDiff, zerosRa, zerosCa, zerosRb, zerosCb, zerosAfit, zerosBfit));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_Chat_zeros_forR
+arma::mat armaVARX1_Chat_zeros_forR(arma::mat& P, arma::mat& COVZ, arma::mat& eigvecVARZ, const arma::vec eigvalVARZ, const double lambdaA, const double lambdaB, const arma::mat& targetA, const arma::mat& targetB, std::string fitAB, const arma::uvec& zerosRa, const arma::uvec& zerosCa, const arma::uvec& zerosRb, const arma::uvec& zerosCb, std::string zerosAfit, std::string zerosBfit);
+RcppExport SEXP ragt2ridges_armaVARX1_Chat_zeros_forR(SEXP PSEXP, SEXP COVZSEXP, SEXP eigvecVARZSEXP, SEXP eigvalVARZSEXP, SEXP lambdaASEXP, SEXP lambdaBSEXP, SEXP targetASEXP, SEXP targetBSEXP, SEXP fitABSEXP, SEXP zerosRaSEXP, SEXP zerosCaSEXP, SEXP zerosRbSEXP, SEXP zerosCbSEXP, SEXP zerosAfitSEXP, SEXP zerosBfitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type P(PSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type COVZ(COVZSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type eigvecVARZ(eigvecVARZSEXP);
+    Rcpp::traits::input_parameter< const arma::vec >::type eigvalVARZ(eigvalVARZSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA(lambdaASEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaB(lambdaBSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA(targetASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetB(targetBSEXP);
+    Rcpp::traits::input_parameter< std::string >::type fitAB(fitABSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosRa(zerosRaSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosCa(zerosCaSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosRb(zerosRbSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type zerosCb(zerosCbSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosAfit(zerosAfitSEXP);
+    Rcpp::traits::input_parameter< std::string >::type zerosBfit(zerosBfitSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_Chat_zeros_forR(P, COVZ, eigvecVARZ, eigvalVARZ, lambdaA, lambdaB, targetA, targetB, fitAB, zerosRa, zerosCa, zerosRb, zerosCb, zerosAfit, zerosBfit));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_Chat_ridgeSS_forR
+arma::mat armaVARX1_Chat_ridgeSS_forR(arma::mat& COVZ, arma::mat& VARZ, const double lambdaA, const double lambdaB, const arma::mat& targetA, const arma::mat& targetB);
+RcppExport SEXP ragt2ridges_armaVARX1_Chat_ridgeSS_forR(SEXP COVZSEXP, SEXP VARZSEXP, SEXP lambdaASEXP, SEXP lambdaBSEXP, SEXP targetASEXP, SEXP targetBSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type COVZ(COVZSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type VARZ(VARZSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA(lambdaASEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaB(lambdaBSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA(targetASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetB(targetBSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_Chat_ridgeSS_forR(COVZ, VARZ, lambdaA, lambdaB, targetA, targetB));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_Chat_ridgeML_forR
+arma::mat armaVARX1_Chat_ridgeML_forR(arma::mat& P, arma::mat& COVZ, arma::mat& eigvecVARZ, const arma::vec eigvalVARZ, const double lambdaA, const double lambdaB, const arma::mat& targetA, const arma::mat& targetB);
+RcppExport SEXP ragt2ridges_armaVARX1_Chat_ridgeML_forR(SEXP PSEXP, SEXP COVZSEXP, SEXP eigvecVARZSEXP, SEXP eigvalVARZSEXP, SEXP lambdaASEXP, SEXP lambdaBSEXP, SEXP targetASEXP, SEXP targetBSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type P(PSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type COVZ(COVZSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type eigvecVARZ(eigvecVARZSEXP);
+    Rcpp::traits::input_parameter< const arma::vec >::type eigvalVARZ(eigvalVARZSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaA(lambdaASEXP);
+    Rcpp::traits::input_parameter< const double >::type lambdaB(lambdaBSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetA(targetASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type targetB(targetBSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_Chat_ridgeML_forR(P, COVZ, eigvecVARZ, eigvalVARZ, lambdaA, lambdaB, targetA, targetB));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_convergenceEvaluation_forR
+double armaVARX1_convergenceEvaluation_forR(arma::mat& Chat, arma::mat& Cprev, arma::mat& Phat, arma::mat& Pprev);
+RcppExport SEXP ragt2ridges_armaVARX1_convergenceEvaluation_forR(SEXP ChatSEXP, SEXP CprevSEXP, SEXP PhatSEXP, SEXP PprevSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type Chat(ChatSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Cprev(CprevSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Phat(PhatSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type Pprev(PprevSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_convergenceEvaluation_forR(Chat, Cprev, Phat, Pprev));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_COVZhat_forR
+arma::mat armaVARX1_COVZhat_forR(Rcpp::NumericVector& Zraw, const int pY);
+RcppExport SEXP ragt2ridges_armaVARX1_COVZhat_forR(SEXP ZrawSEXP, SEXP pYSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Zraw(ZrawSEXP);
+    Rcpp::traits::input_parameter< const int >::type pY(pYSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_COVZhat_forR(Zraw, pY));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_Shat_ML_forR
+arma::mat armaVARX1_Shat_ML_forR(Rcpp::NumericVector& Zraw, arma::mat& A, arma::mat& B);
+RcppExport SEXP ragt2ridges_armaVARX1_Shat_ML_forR(SEXP ZrawSEXP, SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type Zraw(ZrawSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_Shat_ML_forR(Zraw, A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// armaVARX1_loglikLOOCVinternal_forR
+double armaVARX1_loglikLOOCVinternal_forR(arma::vec Yt1, arma::vec Yt0, arma::vec Xt0, arma::mat& A, arma::mat& B, arma::mat& P);
+RcppExport SEXP ragt2ridges_armaVARX1_loglikLOOCVinternal_forR(SEXP Yt1SEXP, SEXP Yt0SEXP, SEXP Xt0SEXP, SEXP ASEXP, SEXP BSEXP, SEXP PSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec >::type Yt1(Yt1SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Yt0(Yt0SEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Xt0(Xt0SEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type B(BSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type P(PSEXP);
+    rcpp_result_gen = Rcpp::wrap(armaVARX1_loglikLOOCVinternal_forR(Yt1, Yt0, Xt0, A, B, P));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 // validate (ensure exported C++ functions exist before calling them)
 static int ragt2ridges_RcppExport_validate(const char* sig) { 
