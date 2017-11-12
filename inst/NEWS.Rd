@@ -2,6 +2,20 @@
 \title{News for Package \pkg{ragt2ridges}}
 \newcommand{\cpkg}{\href{http://cran.r-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.3.0}{
+ \itemize{
+    \item More extensive description added to the description field of the description file. 
+    \item Correct package name inserted in registerDynamicSymbol.c. 
+    \item R code aligned for nicer viewing on Github.	
+    \item The \code{hpvP53mir} data object is replaced by the correct version.
+    \item Several typo's in manuals corrected.
+    \item More consistent wording across manuals introduced.
+    \item Citation updated. 
+    \item Functions \code{momentS}, \code{ridgePchordal}, \code{optPchordal}, and \code{support4ridgep} are now imported from the \code{rags2ridges}-package.
+    \item Three new modules are added: fused ridge estimation of multiple VAR(1) models, and ridge estimation of the VAR(2) and VARX(1) models.		
+  }
+}
+
 \section{Changes in version 0.2.4}{
  \itemize{
     \item Bug repaired in the \code{graphVAR1}-function. Input combination \code{type="globalPC"} and \code{prune=TRUE} produced a warning. 

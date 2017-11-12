@@ -1,8 +1,23 @@
 citHeader("To cite the ragt2ridges package in publications please use:")
 
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+
+citEntry(entry="Manual",
+    title = "ragt2ridges: Ridge Estimation of Vector Auto-Regressive (VAR) Processes",
+    author = personList(as.person("W.N. van Wieringen")),
+    year = year,
+    note = vers,
+    url = "https://CRAN.R-project.org/package=ragt2ridges",
+    textVersion =
+      paste("van Wieringen, W.N. (", year,
+            ") ragt2ridges: Ridge Estimation of Vector Auto-Regressive (VAR) Processes. ",
+            vers, ". https://CRAN.R-project.org/package=ragt2ridges", sep = "")
+)
+
 citEntry(entry="Article",
     title = "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data",
-    author = personList(as.person("Miok, V"), as.person("Wilting, S M"), as.person("van Wieringen, W N")),
+    author = personList(as.person("V. Miok"), as.person("S.M. Wilting"), as.person("W.N. van Wieringen")),
     journal = "Biometrical Journal",
     volume = "59", 
     number = "1", 
@@ -10,7 +25,21 @@ citEntry(entry="Article",
     year = 2017,
     textVersion =
       paste("Miok, V., Wilting, S.M., van Wieringen, W.N. (2017). ",
-		"Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data ", 
+		"Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data. ", 
         	"Biometrical Journal, 59(1), 172-191", sep = "")
+)
+
+citEntry(entry="Article",
+    title = "Ridge estimation of network models from time-course omics data",
+    author = personList(as.person("V. Miok"), as.person("S.M. Wilting"), as.person("W.N. van Wieringen")),
+    journal = "submitted",
+    volume = "", 
+    number = "", 
+    pages =  "",
+    year = 2017,
+    textVersion =
+      paste("Miok, V., Wilting, S.M., van Wieringen, W.N. (2017). ",
+		"Ridge estimation of network models from time-course omics data. ", 
+        	"submitted", sep = "")
 )
 
