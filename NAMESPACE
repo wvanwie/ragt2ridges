@@ -14,8 +14,6 @@ importFrom(igraph, betweenness, closeness, clusters, degree, delete.edges, E, ec
 
 importFrom(fdrtool, fdrtool)
 
-importFrom(marray, maPalette)
-
 importFrom(Matrix, bandSparse, bdiag)
 
 importFrom(methods, as)

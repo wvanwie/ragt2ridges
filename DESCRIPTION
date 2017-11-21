@@ -1,16 +1,16 @@
 Package: ragt2ridges
 Type: Package
 Title: Ridge Estimation of Vector Auto-Regressive (VAR) Processes
-Version: 0.3.0
-Date: 2017-11-10
+Version: 0.3.1
+Date: 2017-11-11
 Author: Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
 Maintainer: Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
-Description: The ragt2ridges-package provides ridge maximum likelihood estimation of vector auto-regressive processes: the VAR(1), VAR(2) and VARX(1) model (more to be added). Prior knowledge may be incorporated in the estimation through a) specification of the edges believed to be absent in the time series chain graph, and b) a shrinkage target towards which the parameter estimate is shrunken for large penalty parameter values. Estimation functionality is accompanied by methodology for penalty parameter selection. In addition, the package offers supporting functionality for the exploitation of estimated models. Among others, i) a procedure to infer the support of the non-sparse ridge estimate (and thereby of the time series chain graph) is implemented, ii) a table of node-wise network summary statistics, iii) mutual information analysis, and iv) impulse response analysis. Cf. Miok et al. (2017) <DOI:10.1002/bimj.201500269> and follow-up work for details on the implemented methods.
+Description: The ragt2ridges-package provides ridge maximum likelihood estimation of vector auto-regressive processes: the VAR(1), VAR(2) and VARX(1) model (more to be added). Prior knowledge may be incorporated in the estimation through a) specification of the edges believed to be absent in the time series chain graph, and b) a shrinkage target towards which the parameter estimate is shrunken for large penalty parameter values. Estimation functionality is accompanied by methodology for penalty parameter selection. In addition, the package offers supporting functionality for the exploitation of estimated models. Among others, i) a procedure to infer the support of the non-sparse ridge estimate (and thereby of the time series chain graph) is implemented, ii) a table of node-wise network summary statistics, iii) mutual information analysis, and iv) impulse response analysis. Cf. Miok et al. (2017) <DOI:10.1002/bimj.201500269> and submitted follow-up work for details on the implemented methods.
 License: GPL (>= 2)
 LazyLoad: yes
 URL: https://github.com/wvanwie/ragt2ridges
 Depends: R (>= 2.15.1), igraph, rags2ridges,
-Imports: abind, expm, fdrtool, graphics, grDevices, marray, MASS, Matrix,
+Imports: abind, expm, fdrtool, graphics, grDevices, MASS, Matrix,
          methods, mvtnorm, stats
 LinkingTo: Rcpp, RcppArmadillo
 NeedsCompilation: yes
