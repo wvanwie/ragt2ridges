@@ -113,12 +113,8 @@ evaluateVAR1fit <- function(Y,
 	cols <- c("darkorange", "yellow", "orange", "red", "ivory", "firebrick", 
 		  "indianred", "tomato", "khaki", "orangered", "chocolate")
 	for (i in 1:nSamples){
-		slhCols <- maPalette(low=paste(cols[i], "1", sep=""), 
-				     high=paste(cols[(i %% 12) + 1], "3", sep=""), 
-				     mid=NULL, 
-				     k=nCovariates)
 		for (j in 1:nCovariates){
-			points(y=Y[j,-1,i], x=Yhat[j,-1,i], col=slhCols[j], pch=20)
+			points(y=Y[j,-1,i], x=Yhat[j,-1,i], col=cols[(j %% length(cols)) + 1], pch=20)
 		}
 	}
 	par(op)
