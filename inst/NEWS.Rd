@@ -2,6 +2,13 @@
 \title{News for Package \pkg{ragt2ridges}}
 \newcommand{\cpkg}{\href{http://cran.r-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.3.1}{
+ \itemize{
+    \item The functions \code{motifStatsVAR1} and \code{pruneMotifStats} added. 
+    \item Dependency on the \code{marray}-package removed (often give an error in CRAN checks). Consequently, the color scheme employed in the \code{evaluateVAR1fit} is less refined.
+  }
+}
+
 \section{Changes in version 0.3.0}{
  \itemize{
     \item More extensive description added to the description field of the description file. 
