@@ -188,7 +188,7 @@ inline Rcpp::List armaEigenDecomp_stackedCovariances(arma::mat& mats){
 	
 	// initiation of several variables
 	int p = mats.n_cols;
-	int nGroups = mats.n_rows / p;
+	unsigned int nGroups = mats.n_rows / p;
 
 	for (unsigned int k = 0; k < nGroups; ++k) {
 		arma::eig_sym(eigvalsSLH, eigvecsSLH, mats.submat(k*p, 0, (k+1)*p-1, p-1), "dc");
@@ -237,7 +237,7 @@ inline Rcpp::List armaVAR1fused_ridgeML(Rcpp::NumericVector& Yraw, arma::ivec id
 	// estimate As by SS minimization and store as a long matrix
 	arma::ivec idUniq = arma::unique(id);			    
 	arma::mat VARYs = arma::mat(p*idUniq.n_elem,p); arma::mat COVYs = arma::mat(p*idUniq.n_elem,p); arma::mat Ahats = arma::mat(p*idUniq.n_elem,p); arma::uvec sliceID;
-	for (int g = 0; g < idUniq.n_elem; ++g){	
+	for (unsigned int g = 0; g < idUniq.n_elem; ++g){	
 		sliceID = arma::find(id == g);
 		VARYs.submat(p*g,0,p*(g+1)-1,p-1) = armaVAR1_VARYhat(Y.slices(sliceID.min(), sliceID.max()), efficient, unbalanced);
 		COVYs.submat(p*g,0,p*(g+1)-1,p-1) = armaVAR1_COVYhat(Y.slices(sliceID.min(), sliceID.max()));

@@ -401,8 +401,6 @@ arma::mat armaVAR2_Ahat_zeros_forR(arma::mat& P, arma::mat& COVY, arma::mat& eig
 // [[Rcpp::export(".armaVAR2_loglik_LOOCVinternal")]]
 double armaVAR2_loglikLOOCVinternal_forR(arma::vec Yt2, arma::vec Yt1, arma::vec Yt0, arma::mat& A1, arma::mat& A2, arma::mat& P){
 
-	double LL = 0;
-	int dofs = 0;
 	double logDetP;
 	double detPsign;
 	arma::log_det(logDetP, detPsign, P);

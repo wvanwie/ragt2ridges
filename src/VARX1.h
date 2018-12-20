@@ -358,8 +358,6 @@ arma::mat armaVARX1_Shat_ML_forR(Rcpp::NumericVector& Zraw, arma::mat& A, arma::
 // [[Rcpp::export(".armaVARX1_loglik_LOOCVinternal")]]
 double armaVARX1_loglikLOOCVinternal_forR(arma::vec Yt1, arma::vec Yt0, arma::vec Xt0, arma::mat& A, arma::mat& B, arma::mat& P){
 
-	double LL = 0;
-	int dofs = 0;
 	Yt1 = Yt1 - A * Yt0 - B * Xt0;
 	double logDetP;
 	double detPsign;
