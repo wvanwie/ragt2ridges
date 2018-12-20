@@ -32,14 +32,14 @@ citEntry(entry="Article",
 citEntry(entry="Article",
     title = "Ridge estimation of network models from time-course omics data",
     author = personList(as.person("V. Miok"), as.person("S.M. Wilting"), as.person("W.N. van Wieringen")),
-    journal = "submitted",
+    journal = "Biometrical Journal",
     volume = "", 
     number = "", 
     pages =  "",
-    year = 2017,
+    year = 2018,
     textVersion =
-      paste("Miok, V., Wilting, S.M., van Wieringen, W.N. (2017). ",
+      paste("Miok, V., Wilting, S.M., van Wieringen, W.N. (2018). ",
 		"Ridge estimation of network models from time-course omics data. ", 
-        	"submitted", sep = "")
+        	"Biometrical Journal", sep = "")
 )
 

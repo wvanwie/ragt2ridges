@@ -2,6 +2,16 @@
 \title{News for Package \pkg{ragt2ridges}}
 \newcommand{\cpkg}{\href{http://cran.r-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.3.2}{
+ \itemize{
+    \item The packages \code{Biobase} and \code{CHGbase} are now suggested in the \code{DESCRIPTION}-file to avoid errors on CRAN. 
+    \item The \code{.Rd}-file of the package is updated.
+    \item Citations are updated.
+    \item A typo corrected.
+    \item Some warnings on \code{C++}-code tackled.
+  }
+}
+
 \section{Changes in version 0.3.1}{
  \itemize{
     \item The functions \code{motifStatsVAR1} and \code{pruneMotifStats} added. 
