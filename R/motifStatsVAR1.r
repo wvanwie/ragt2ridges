@@ -284,7 +284,7 @@ motifStatsVAR1 <- function(sparseA, verbose=TRUE){
 		text( 0.8, -1.15, expression(italic(t)+1), cex=1, font=3)
 		text(   1, -1.15, expression(italic(t)+2), cex=1, font=3)
 		text(-1.0,  1.15, paste("# self-regulators: ",   length(selfregulators), sep=""))
-		text(-0.1,  1.15, paste("# feeback-pairs: ",     length(feedbackpairs), sep=""))
+		text(-0.1,  1.15, paste("# feedback-pairs: ",     length(feedbackpairs), sep=""))
 		text( 0.7,  1.15, paste("# feedforward loops: ", length(feedforwardloops), sep=""))
 		text(-1.0, -0.1,  paste("# feedback loops: ",    length(feedbackloops), sep=""))
 		text(-0.1, -0.1,  paste("# bi-fans: ",           length(bifans), sep=""))
