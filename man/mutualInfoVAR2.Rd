@@ -19,7 +19,7 @@ mutualInfoVAR2(A1, A2, SigmaE, T)
 Object of class \code{numeric} with elements corresponding to the mutual informations. 
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), ``Ridge estimation of network models from time-course omics data'', submitted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2018), ``Ridge estimation of network models from time-course omics data'', \emph{Biometrical Journal}, <DOI:10.1002/bimj.201700195>. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

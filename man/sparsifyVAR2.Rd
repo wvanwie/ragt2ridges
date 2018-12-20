@@ -47,7 +47,7 @@ When prior to the sparsification knowledge on the support of \eqn{\mathbf{A}_1} 
 \references{
 Lutkepohl, H. (2005), New Introduction to Multiple Time Series Analysis. Springer, Berlin.
 
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of network models from time-course omics data", \emph{submitted}. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2018), ``Ridge estimation of network models from time-course omics data'', \emph{Biometrical Journal}, <DOI:10.1002/bimj.201700195>. 
 
 Strimmer, K. (2008), ``fdrtool: a versatile R package for estimating local and tail area-based false discovery rates'', \emph{Bioinformatics} 24(12): 1461-1462.
 

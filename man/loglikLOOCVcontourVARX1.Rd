@@ -29,7 +29,7 @@ A \code{list}-object with slots:
 \item{llLOOCV}{A \code{matrix} of leave-one-out cross-validated log-likelihoods. Rows and columns correspond to \eqn{\lambda_a} and \eqn{\lambda_{b}} values, respectively. }
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of network models from time-course omics data", submitted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2018), ``Ridge estimation of network models from time-course omics data'', \emph{Biometrical Journal}, <DOI:10.1002/bimj.201700195>. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>, Viktorian Miok.

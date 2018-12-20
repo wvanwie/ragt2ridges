@@ -54,17 +54,17 @@ class \code{matrix}.
 Future versions of this function may include additional statistics
 }
 \references{
-Dahlhaus (2000), "Graphical interaction models for multivariate time series", Metrika, 51, 157-172.
+Dahlhaus (2000), ``Graphical interaction models for multivariate time series'', Metrika, 51, 157-172.
 
-Dahlhaus, Eichler (2003), "Causality and graphical models in time series analysis", Oxford Statistical Science Series, 115-137.
+Dahlhaus, Eichler (2003), ``Causality and graphical models in time series analysis'', Oxford Statistical Science Series, 115-137.
 
-Hamilton, J. D. (1994), Time series analysis. Princeton: Princeton university press.
+Hamilton, J. D. (1994), \emph{Time Series Analysis}. Princeton: Princeton university press.
 
-Lutkepohl, H. (2005), New Introduction to Multiple Time Series Analysis. Springer, Berlin.
+Lutkepohl, H. (2005), \emph{New Introduction to Multiple Time Series Analysis}. Springer, Berlin.
 
-Newman, M.E.J. (2010). "Networks: an introduction", Oxford University Press.
+Newman, M.E.J. (2010). \emph{Networks: An Introduction}, Oxford University Press.
 
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), ``Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data'', \emph{Biometrical Journal}, 59(1), 172-191. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>, Carel F.W. Peeters.

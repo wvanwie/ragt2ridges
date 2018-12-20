@@ -67,7 +67,7 @@ In case \eqn{\lambda_a \not= \lambda_b}, the ridge ML estimates (conditional on 
 when \eqn{\lambda_a \not= \lambda_b}. To avoid the use of matrices of order \eqn{p_y^2 + p_y p_x} an approximation is used. For the approximation it is assumed that the contemporaneous covariance between \eqn{\mathbf{Y}_t} and \eqn{\mathbf{X}_t} is zero (for lag one), after which the estimates can be evaluated using matrices of order \eqn{p_y+p_x}.
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), ``Ridge estimation of network models from time-course omics data'', submitted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2018), ``Ridge estimation of network models from time-course omics data'', \emph{Biometrical Journal}, <DOI:10.1002/bimj.201700195>. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

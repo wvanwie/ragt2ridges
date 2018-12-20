@@ -28,7 +28,7 @@ An object of class \code{list} with slots:
 Future versions of this function may include additional slots reporting more motif types.
 }
 \references{
-Alon, U. (2007), "Network motifs: theory and experimental approaches", Nature Reviews Genetics, 8, 450-461.
+Alon, U. (2007), ``Network motifs: theory and experimental approaches'', \emph{Nature Reviews Genetics}, 8, 450-461.
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>.

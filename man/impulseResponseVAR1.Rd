@@ -18,14 +18,13 @@ impulseResponseVAR1(A, T)
 Object of class \code{matrix}. Rows and columns correspond to covariates, elements to the impulse response of 'row variate' on the 'columns variate' on \code{T} time points from the current. 
 }
 \references{
-Hamilton, J. D. (1994), Time series analysis. Princeton: Princeton university press.
+Hamilton, J. D. (1994), \emph{Time Series Analysis}. Princeton: Princeton university press.
 
-Lutkepohl, H. (2005), New Introduction to Multiple Time Series Analysis. Springer, Berlin.
+Lutkepohl, H. (2005), \emph{New Introduction to Multiple Time Series Analysis}. Springer, Berlin.
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
 }
-
 \seealso{
 \code{\link{ridgeVAR1}}.
 }

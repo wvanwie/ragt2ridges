@@ -61,7 +61,7 @@ A list-object with slots:
 When the target of the precision matrix is specified through the \code{targetPtype}-argument, the target is data-driven and updated at each iteration when \code{fitA="ml"}. 
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), ``Ridge estimation of network models from time-course omics data'', submitted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2018), ``Ridge estimation of network models from time-course omics data'', \emph{Biometrical Journal}, <DOI:10.1002/bimj.201700195>. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

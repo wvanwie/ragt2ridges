@@ -16,11 +16,11 @@ CIGofVAR2(sparseA1, sparseA2, sparseP, type="global")
 \item{type}{ A \code{character} indicating whether the \code{global} or \code{contemp} (contemporaneous) CIG should be plotted. }
 }
 \references{
-Dahlhaus (2000), "Graphical interaction models for multivariate time series", \emph{Metrika}, 51, 157-172.
+Dahlhaus (2000), ``Graphical interaction models for multivariate time series'', \emph{Metrika}, 51, 157-172.
 
-Dahlhaus, Eichler (2003), "Causality and graphical models in time series analysis", \emph{Oxford Statistical Science Series}, 115-137.
+Dahlhaus, Eichler (2003), ``Causality and graphical models in time series analysis'', \emph{Oxford Statistical Science Series}, 115-137.
 
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of network models from time-course omics data", \emph{submitted}.
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2018), ``Ridge estimation of network models from time-course omics data'', \emph{Biometrical Journal}, <DOI:10.1002/bimj.201700195>.
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

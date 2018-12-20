@@ -25,7 +25,7 @@ A \code{list}-object with slots:
 \item{llLOOCV}{A \code{matrix} of leave-one-out cross-validated log-likelihoods. Rows and columns correspond to \eqn{\lambda_a} and \eqn{\lambda_{\omega}} values, respectively.}
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), ``Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data'', \emph{Biometrical Journal}, 59(1), 172-191. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

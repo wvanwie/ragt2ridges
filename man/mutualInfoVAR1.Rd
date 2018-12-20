@@ -18,7 +18,7 @@ mutualInfoVAR1(A, SigmaE, T)
 Object of class \code{numeric} with elements corresponding to the mutual informations. The \eqn{j}-th element represents the mutual information of the \eqn{j}-th variate at the current time point with all variates at the \code{T}-th time point from now. 
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), "Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data", \emph{Biometrical Journal}, 59(1), 172-191. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), ``Ridge estimation of the VAR(1) model and its time series chain graph from multivariate time-course omics data'', \emph{Biometrical Journal}, 59(1), 172-191. 
 }
 
 \author{

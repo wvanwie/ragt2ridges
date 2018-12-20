@@ -66,7 +66,7 @@ When the target of the precision matrix is specified through the \code{targetPty
 In case \eqn{\lambda_{a1} \not= \lambda_{a2}}, the ridge ML estimates (conditional on the current estimate of \eqn{\mathbf{\Omega}_{\varepsilon}}) of \eqn{\mathbf{A}_1} and \eqn{\mathbf{A}_2} are approximations. Their explicit evaluation involves a Kronecker product times a vector. Its full expansion is memory inefficient, in particular for (say) \eqn{p_y > 50}. If \eqn{\lambda_{a1} = \lambda_{a2}} the estimates of \eqn{\mathbf{A}_1} and \eqn{\mathbf{A}_2} can be evaluated through multiplications of matrices of dimensions \eqn{2 p_y \times 2 p_y} (instead of \eqn{2 p_y^2 \times  2 p_y^2}). The evaluation cannot be simplified computationally when \eqn{\lambda_{a1} \not= \lambda_{a1}}. To avoid the use of prohitedly large matrices an approximation is used. For the approximation it is assumed that the contemporaneous covariance between \eqn{\mathbf{Y}_t} and \eqn{\mathbf{X}_t} is zero (for lag one), after which the estimates can be evaluated using matrices of order \eqn{p_y+p_x}.
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), ``Ridge estimation of network models from time-course omics data'', submitted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2018), ``Ridge estimation of network models from time-course omics data'', \emph{Biometrical Journal}, <DOI:10.1002/bimj.201700195>. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

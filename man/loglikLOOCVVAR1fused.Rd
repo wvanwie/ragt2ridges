@@ -23,7 +23,7 @@ A \code{numeric} of length one: the minus (!) LOOCV log-likelihood.
 The minus LOOCV log-likelihood is returned as standard optimization procedures in R like \code{nlminb} and \code{constrOptim} minimize (rather then maximize). Hence, by providing the minus LOOCV log-likelihood the function \code{\link{loglikLOOCVVAR1fused}} can directly used by these optimization procedures.
 }
 \references{
-Miok, V., Wilting, S.M., Van Wieringen, W.N. (2017), ``Ridge estimation of network models from time-course omics data'', submitted. 
+Miok, V., Wilting, S.M., Van Wieringen, W.N. (2018), ``Ridge estimation of network models from time-course omics data'', \emph{Biometrical Journal}, <DOI:10.1002/bimj.201700195>. 
 }
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>

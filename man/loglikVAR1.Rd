@@ -21,7 +21,6 @@ The log-likelihood of the VAR(1) model with supplied parameters.
 \author{
 Wessel N. van Wieringen <w.vanwieringen@vumc.nl>
 }
-
 \seealso{
 \code{\link{ridgeVAR1}}.
 }

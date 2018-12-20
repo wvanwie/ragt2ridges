@@ -24,9 +24,9 @@ data(hpvP53)
 \item{cn2rna}{ An object of class \code{matrix}. Adjancency matrix indicating which DNA copy number features (in \code{hpvP53cn}) map to which mRNAs (in \code{hpvP53rna}). }
 }
 \source{
-Ogata, H., Goto, S., Sato, K., Fujibuchi, W., Bono, H., Kanehisa, M. (1999), KEGG: Kyoto Encyclopedia of Genes and Genomes. \emph{Nucleic Acids Research}, 27(1), 29-34.
+Ogata, H., Goto, S., Sato, K., Fujibuchi, W., Bono, H., Kanehisa, M. (1999), ``KEGG: Kyoto Encyclopedia of Genes and Genomes''. \emph{Nucleic Acids Research}, 27(1), 29-34.
 
-Wilting, S.M., Miok, V., Jaspers, A., Boon, D., Hanne Sorgard, H., Lando, M., Snoek, B.C., Van Wieringen, W.N., Meijer, C.J.L.M., Lyng, H., Snijders, P.J.F., Steenbergen, R.D.M. (2016), "Aberrant methylation-mediated silencing of microRNAs contributes to HPV-induced anchorage independence", \emph{Oncotarget}, Vol. 7, No. 28, 43805-43819, DOI:10.18632/oncotarget.9698 .
+Wilting, S.M., Miok, V., Jaspers, A., Boon, D., Hanne Sorgard, H., Lando, M., Snoek, B.C., Van Wieringen, W.N., Meijer, C.J.L.M., Lyng, H., Snijders, P.J.F., Steenbergen, R.D.M. (2016), ``Aberrant methylation-mediated silencing of microRNAs contributes to HPV-induced anchorage independence'', \emph{Oncotarget}, Vol. 7, No. 28, 43805-43819, DOI:10.18632/oncotarget.9698 .
 }
 \examples{
 data(hpvP53)
